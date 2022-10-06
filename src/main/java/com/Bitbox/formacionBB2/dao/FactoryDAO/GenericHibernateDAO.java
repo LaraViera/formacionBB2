@@ -46,5 +46,6 @@ public class GenericHibernateDAO extends HibernateDaoSupport implements GenericD
     public <T> List<T> find(String hql) {
         final List<T> entities = (List<T>) getHibernateTemplate().find(hql);
         return entities;
+        
     }
 }
