@@ -1,15 +1,27 @@
 package com.Bitbox.formacionBB2.model;
 
 
-import javax.persistence.Entity;
+import lombok.Data;
 
+import javax.persistence.*;
 
+@Data
 @Entity
+@Table(name = "Supplier", schema = "erp")
 public class Supplier {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "supplier_id_seq")
+    @SequenceGenerator(name = "supplier_id_seq", sequenceName = "supplier_id_seq", allocationSize = 1, schema = "erp")
+    @Column(name = "idSupplier")
     private Long idSupplier;
-    private String username;
-    private String password;
+
+    @Column(name = "nameSupplier")
+    private String name;
+
+
+    @Column(name = "countrySupplier")
+    private String country;
 
     public Long getIdSupplier() {
 
@@ -21,31 +33,28 @@ public class Supplier {
         this.idSupplier = idSupplier;
     }
 
-    public String getUsername() {
-
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getPassword() {
-        return password;
+    public String getCountry() {
+        return country;
     }
 
-    public void setPassword(String password) {
-
-        this.password = password;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     @Override
     public String toString() {
-        return "Users{" +
+        return "Supplier{" +
                 "idSupplier=" + idSupplier +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", country='" + country + '\'' +
                 '}';
     }
 }

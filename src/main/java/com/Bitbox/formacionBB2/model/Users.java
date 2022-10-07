@@ -1,26 +1,28 @@
 package com.Bitbox.formacionBB2.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
+@Data
 @Entity
-@Table(name="users", schema = "erp")
+@Table(name = "USERS", schema = "erp")
 public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_seq")
     @SequenceGenerator(name="user_id_seq", sequenceName = "user_id_seq", allocationSize = 1, schema = "erp")
+    //@GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="idUser")
     Long idUsers;
 
-    @Column(name="userName", unique = false)
-    String userName;
+    //@Column(name="user_name")
+    @Column(name = "user_name", unique = false, nullable = false)
+    String username;
 
-    @Column(name="password", unique = false)
+    //@Column(name="password")
+    @Column(name = "password", unique = false, nullable = false)
     String password;
-
-    @Column(name="userTypeEnum")
-    @Enumerated(EnumType.STRING)
-    UserTypeEnum userTypeEnum;
 
 
     public Long getIdUsers() {
@@ -33,14 +35,14 @@ public class Users {
         this.idUsers = idUsers;
     }
 
-    public String getUserName() {
+    public String getUsername() {
 
-        return userName;
+        return username;
     }
 
-    public void setUserName(String userName) {
+    public void setUsername(String username) {
 
-        this.userName = userName;
+        this.username = username;
     }
 
     public String getPassword() {
@@ -52,21 +54,21 @@ public class Users {
         this.password = password;
     }
 
-    public UserTypeEnum getUserTypeEnum() {
+    /*public UserTypeEnum getUserTypeEnum() {
         return userTypeEnum;
     }
 
     public void setUserTypeEnum(UserTypeEnum userTypeEnum) {
         this.userTypeEnum = userTypeEnum;
-    }
+    }*/
 
     @Override
     public String toString() {
         return "Users{" +
                 "idUsers=" + idUsers +
-                ", userName='" + userName + '\'' +
+                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", userTypeEnum=" + userTypeEnum +
+                // ", userTypeEnum=" + userTypeEnum +
                 '}';
     }
 }

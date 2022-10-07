@@ -18,7 +18,7 @@ import java.util.List;
  * @hibernate.class table="item_core" schema="erp" mutable="true" dynamic-update="true"
  */
 @Entity
-@Table(name="item", schema = "erp")
+@Table(name = "itemPriceReduction", schema = "erp")
 public class Item implements Serializable {
 
     @Id
@@ -30,22 +30,22 @@ public class Item implements Serializable {
     @Column (name="description")
     String description;
 
-    @Column(name = "price", precision = 12, scale = 2)
-    BigDecimal price;
+    @Column(name = "priceItem", precision = 12, scale = 2)
+    BigDecimal priceItem;
 
     @OneToMany(mappedBy = "idPriceReduction", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JsonManagedReference(value = "priceReduction")
-    List<PriceReduction> priceReduction;
+    @JsonManagedReference(value = "priceReductionItem")
+    List<PriceReduction> priceReductionItem;
 
     @OneToMany(mappedBy = "idStateItem", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonManagedReference(value = "stateItem")
     List<StateItem> stateItems;
 
-    @Column (name="creationDate")
-    LocalDate creationDate;
+    @Column(name = "creationDateItem")
+    LocalDate creationDateItem;
 
-    @Column (name="creator_id")
-    Long creator_id;
+    @Column(name = "idCreatorItem")
+    Long idCreatorItem;
 
 
     public Long getIdItem() {
@@ -65,20 +65,20 @@ public class Item implements Serializable {
     }
 
 
-    public BigDecimal getPrice() {
-        return price;
+    public BigDecimal getPriceItem() {
+        return priceItem;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setPriceItem(BigDecimal price) {
+        this.priceItem = price;
     }
 
-    public List<PriceReduction> getPriceReduction() {
-        return priceReduction;
+    public List<PriceReduction> getPriceReductionItem() {
+        return priceReductionItem;
     }
 
-    public void setPriceReduction(List<PriceReduction> priceReduction) {
-        this.priceReduction = priceReduction;
+    public void setPriceReductionItem(List<PriceReduction> priceReductionItem) {
+        this.priceReductionItem = priceReductionItem;
     }
 
     public List<StateItem> getStateItems() {
@@ -89,21 +89,21 @@ public class Item implements Serializable {
         this.stateItems = stateItems;
     }
 
-    public LocalDate getCreationDate() {
-        return creationDate;
+    public LocalDate getCreationDateItem() {
+        return creationDateItem;
     }
 
-    public void setCreationDate(LocalDate creationDate) {
-        this.creationDate = creationDate;
+    public void setCreationDateItem(LocalDate creationDateItem) {
+        this.creationDateItem = creationDateItem;
     }
 
-    public Long getCreator_id() {
-        return creator_id;
+    public Long getIdCreatorItem() {
+        return idCreatorItem;
     }
 
-    public void setCreator_id(Long creator_id) {
+    public void setIdCreatorItem(Long idCreatorItem) {
 
-        this.creator_id = creator_id;
+        this.idCreatorItem = idCreatorItem;
     }
 
 

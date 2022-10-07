@@ -17,15 +17,15 @@ public class PriceReduction {
     @Column(name = "reducedPrice", precision = 12, scale = 2)
     BigDecimal reducedPrice;
 
-    @Column (name="startDate")
-    LocalDate startDate;
+    @Column(name = "startDatePriceReduction")
+    LocalDate startDatePriceReduction;
 
-    @Column (name="endDate")
-    LocalDate endDate;
+    @Column(name = "endDatePriceReduction")
+    LocalDate endDatePriceReduction;
 
     @ManyToOne()
     @JoinColumn(name="item_id", referencedColumnName = "idItem", nullable = true, unique =false )
-    Item item;
+    Item itemPriceReduction;
 
     public Long getIdPriceReduction() {
         return idPriceReduction;
@@ -43,28 +43,28 @@ public class PriceReduction {
         this.reducedPrice = reducedPrice;
     }
 
-    public LocalDate getStartDate() {
-        return startDate;
+    public LocalDate getStartDatePriceReduction() {
+        return startDatePriceReduction;
     }
 
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
+    public void setStartDatePriceReduction(LocalDate startDatePriceReduction) {
+        this.startDatePriceReduction = startDatePriceReduction;
     }
 
-    public LocalDate getEndDate() {
-        return endDate;
+    public LocalDate getEndDatePriceReduction() {
+        return endDatePriceReduction;
     }
 
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
+    public void setEndDatePriceReduction(LocalDate endDatePriceReduction) {
+        this.endDatePriceReduction = endDatePriceReduction;
     }
 
 
-    public Item getItem() {
-        return item;
+    public Item getItemPriceReduction() {
+        return itemPriceReduction;
     }
 
-    public void setItem(Item item) {
-        this.item = item;
+    public void setItemPriceReduction(Item itemPriceReduction) {
+        this.itemPriceReduction = itemPriceReduction;
     }
 }
