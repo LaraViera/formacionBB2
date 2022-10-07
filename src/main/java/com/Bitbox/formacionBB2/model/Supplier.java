@@ -1,27 +1,16 @@
 package com.Bitbox.formacionBB2.model;
 
-import lombok.Data;
+
+import javax.persistence.Entity;
 
 
-/**
- * @hibernate.class table="supplier_core" schema="erp" mutable="true"
- *                  dynamic-update="true"
- */
-@Data
+@Entity
 public class Supplier {
 
     private Long idSupplier;
     private String username;
     private String password;
 
-    /**
-     * @return Long;
-     * @hibernate.id unsaved-value="null" column="idSupplier" type="long"
-     * @hibernate.generator class="sequence"
-     * @hibernate.param name="sequence" value="erp.user_id_seq"
-     * @JsonManagedReference
-     * @hibernate.
-     */
     public Long getIdSupplier() {
 
         return idSupplier;
@@ -32,14 +21,6 @@ public class Supplier {
         this.idSupplier = idSupplier;
     }
 
-    /**
-     * @hibernate.property
-     * column="username"
-     * type="string"
-     * not-null="true"
-     * unique="false"
-     * @return String
-     */
     public String getUsername() {
 
         return username;
@@ -50,14 +31,6 @@ public class Supplier {
         this.username = username;
     }
 
-    /**
-     * @hibernate.property
-     * column="password"
-     * type="string"
-     * not-null="true"
-     * unique="false"
-     * @return String
-     */
     public String getPassword() {
         return password;
     }

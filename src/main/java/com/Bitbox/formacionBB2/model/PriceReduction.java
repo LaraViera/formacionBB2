@@ -1,10 +1,8 @@
 package com.Bitbox.formacionBB2.model;
 
-import lombok.Data;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name="pricereduction", schema="erp")
@@ -16,27 +14,19 @@ public class PriceReduction {
     @Column(name="idPriceReduction")
     Long idPriceReduction;
 
-    @Column (name="reducedPrice")
+    @Column(name = "reducedPrice", precision = 12, scale = 2)
     BigDecimal reducedPrice;
 
     @Column (name="startDate")
-    Date startDate;
+    LocalDate startDate;
 
     @Column (name="endDate")
-    Date endDate;
+    LocalDate endDate;
 
     @ManyToOne()
     @JoinColumn(name="item_id", referencedColumnName = "idItem", nullable = true, unique =false )
     Item item;
 
-    /* /**
-     * @return Long;
-     * @hibernate.id unsaved-value="null" column="idPriceReduction" type="long"
-     * @hibernate.generator class="sequence"
-     * @hibernate.param name="sequence" value="erp.pricereduction_id_seq"
-     * @JsonManagedReference
-     * @hibernate.
-     */
     public Long getIdPriceReduction() {
         return idPriceReduction;
     }
@@ -45,14 +35,6 @@ public class PriceReduction {
         this.idPriceReduction = idPriceReduction;
     }
 
-    /*/**
-     * @hibernate.property
-     * column="reducedPrice"
-     * type="money"
-     * not-null="false"
-     * unique="false"
-     * @return BigDecimal
-     */
     public BigDecimal getReducedPrice() {
         return reducedPrice;
     }
@@ -61,35 +43,19 @@ public class PriceReduction {
         this.reducedPrice = reducedPrice;
     }
 
-    /*/**
-     * @hibernate.property
-     * column="startDate"
-     * type="timestamp"
-     * not-null="true"
-     * unique="false"
-     * @return Date
-     */
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    /*/**
-     * @hibernate.property
-     * column="endDate"
-     * type="timestamp"
-     * not-null="true"
-     * unique="false"
-     * @return Date
-     */
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 

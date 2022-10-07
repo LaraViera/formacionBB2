@@ -1,14 +1,7 @@
 package com.Bitbox.formacionBB2.model;
 
-import lombok.Data;
-
 import javax.persistence.*;
 
-
-/**
- * @hibernate.class table="users_core" schema="erp" mutable="true"
- *                  dynamic-update="true"
- */
 @Entity
 @Table(name="users", schema = "erp")
 public class Users {
@@ -29,14 +22,6 @@ public class Users {
     @Enumerated(EnumType.STRING)
     UserTypeEnum userTypeEnum;
 
-    /*/**
-     * @return Long;
-     * @hibernate.id unsaved-value="null" column="idUsers" type="long"
-     * @hibernate.generator class="sequence"
-     * @hibernate.param name="sequence" value="erp.user_id_seq"
-     * @JsonManagedReference
-     * @hibernate.
-     */
 
     public Long getIdUsers() {
 
@@ -48,14 +33,6 @@ public class Users {
         this.idUsers = idUsers;
     }
 
-     /*/**
-     * @hibernate.property
-     * column="userName"
-     * type="string"
-     * not-null="true"
-     * unique="false"
-     * @return String
-     */
     public String getUserName() {
 
         return userName;
@@ -66,14 +43,6 @@ public class Users {
         this.userName = userName;
     }
 
-     /* /**
-     * @hibernate.property
-     * column="password"
-     * type="string"
-     * not-null="true"
-     * unique="false"
-     * @return String
-     */
     public String getPassword() {
         return password;
     }
@@ -83,14 +52,6 @@ public class Users {
         this.password = password;
     }
 
-    /* /**
-     * @hibernate.property  column="userTypeEnum"  not-null="true"  unique="false"
-     * @hibernate.type  name="com.bbsw.erp.hibernate.GenericEnumUserType"
-     * @hibernate.param  name="enumClass" value="com.Bitbox.formacionBB2.userTypeEnum"
-     * @hibernate.param  name="identifierMethod" value="getId"
-     * @hibernate.param  name="valueOfMethod" value="getFromId"
-     * @return
-     */
     public UserTypeEnum getUserTypeEnum() {
         return userTypeEnum;
     }

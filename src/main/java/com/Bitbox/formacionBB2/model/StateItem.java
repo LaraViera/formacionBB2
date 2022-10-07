@@ -1,17 +1,9 @@
 package com.Bitbox.formacionBB2.model;
 
-import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
-/*/**
- * @hibernate.class
- *  table="stateitem_core"
- *  schema="erp"
- *  mutable="true"
- *  dynamic-update="true"
- */
 
 @Entity
 @Table(name = "stateitem", schema="erp")
@@ -24,7 +16,7 @@ public class StateItem {
     Long idStateItem;
 
     @Column (name="updateStateItem")
-    Date updateStateItem;
+    LocalDate updateStateItem;
 
     @ManyToOne()
     @JoinColumn(name="item_id")
@@ -37,8 +29,7 @@ public class StateItem {
     String description;
 
 
-
-    public StateItem( Long idStateItem, Date updateStateItem, Item idItem, Boolean active, String description) {
+    public StateItem(Long idStateItem, LocalDate updateStateItem, Item idItem, Boolean active, String description) {
         this.idStateItem =idStateItem;
         this.updateStateItem = updateStateItem;
         this.idItem = idItem;
@@ -46,13 +37,6 @@ public class StateItem {
         this.description = description;
     }
 
-    /*/**
-     * @hibernate.id unsaved-value="null" column="idIdStateItem"
-     * @hibernate.generator class="sequence"
-     * @hibernate.param name="sequence" value="erp.stateitem_id_seq"
-     *  @return Long
-     */
-//    @Id
     public Long getIdStateItem() {
         return idStateItem;
     }
@@ -61,29 +45,14 @@ public class StateItem {
         this.idStateItem = idStateItem;
     }
 
-    /*/**
-     * @hibernate.property
-     * column="updatestateitem"
-     * type="timestamp"
-     * not-null="true"
-     * unique="false"
-     * @return Date
-     */
-    public Date getUpdateStateItem() {
+    public LocalDate getUpdateStateItem() {
         return updateStateItem;
     }
 
-    public void setUpdateStateItem(Date updatestateItem) {
+    public void setUpdateStateItem(LocalDate updatestateItem) {
         this.updateStateItem = updateStateItem;
     }
 
-    /*/**
-     * @hibernate.many_to_one
-     *  column="item_id"
-     *  class="com.Bitbox.formacionBB2.model.Item"
-     *  not-null="true"
-     *  lazy="false"
-     */
     public Item getIdItem() {
         return idItem;
     }
@@ -92,14 +61,6 @@ public class StateItem {
         this.idItem = idItem;
     }
 
-    /*/**
-     * @hibernate.property
-     * column="active"
-     * type="boolean"
-     * not-null="true"
-     * unique="false"
-     * @return Boolean
-     */
     public Boolean getActive() {
         return active;
     }
@@ -108,14 +69,6 @@ public class StateItem {
         this.active = active;
     }
 
-    /*/**
-     * @hibernate.property
-     * column="description"
-     * type="string"
-     * not-null="true"
-     * unique="false"
-     * @return String
-     */
     public String getDescription() {
         return description;
     }
