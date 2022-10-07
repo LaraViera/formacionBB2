@@ -21,4 +21,15 @@ public class UserServiceImpl implements UserService {
             return false;
         }
     }
+
+    /*@Override
+    public List<Users> getAllUsers() {
+        List<Users> allUsers;
+        try{
+           allUsers= userRepository.getAllUsers();
+            return allUsers;
+        }catch(Exception e){
+            throw e;
+        }
+    }*/
 }

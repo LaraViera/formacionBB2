@@ -4,4 +4,6 @@ import com.Bitbox.formacionBB2.model.Users;
 
 public interface UserService {
     public Boolean saveUser(Users user);
+//    public List<Users> getAllUsers();
+
 }

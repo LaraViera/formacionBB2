@@ -19,4 +19,9 @@ public class UserController {
     public Boolean saveUser(@RequestBody Users u) {
         return userService.saveUser(u);
     }
+
+    /*@RequestMapping(value = "/all", method = RequestMethod.GET)
+    public List<Users> getUsers() {
+        return userService.getAllUsers();
+    }*/
 }

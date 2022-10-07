@@ -12,15 +12,12 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_seq")
     @SequenceGenerator(name="user_id_seq", sequenceName = "user_id_seq", allocationSize = 1, schema = "erp")
-    //@GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="idUser")
     Long idUsers;
 
-    //@Column(name="user_name")
     @Column(name = "user_name", unique = false, nullable = false)
     String username;
 
-    //@Column(name="password")
     @Column(name = "password", unique = false, nullable = false)
     String password;
 

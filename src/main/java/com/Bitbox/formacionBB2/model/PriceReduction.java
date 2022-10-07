@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-@Table(name="pricereduction", schema="erp")
+@Table(name = "itemPriceReduction", schema = "erp")
 public class PriceReduction {
 
     @Id

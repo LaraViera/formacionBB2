@@ -18,7 +18,7 @@ import java.util.List;
  * @hibernate.class table="item_core" schema="erp" mutable="true" dynamic-update="true"
  */
 @Entity
-@Table(name = "itemPriceReduction", schema = "erp")
+@Table(name = "item", schema = "erp")
 public class Item implements Serializable {
 
     @Id
@@ -27,7 +27,7 @@ public class Item implements Serializable {
     @Column(name="idItem")
     Long idItem;
 
-    @Column (name="description")
+    @Column(name = "descriptionItem", nullable = false)
     String description;
 
     @Column(name = "priceItem", precision = 12, scale = 2)
