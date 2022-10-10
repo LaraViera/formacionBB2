@@ -9,44 +9,48 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-//import javax.persistence.Id;
-//import javax.persistence.Table;
-
-
-
-/* /**
- * @hibernate.class table="item_core" schema="erp" mutable="true" dynamic-update="true"
- */
 @Entity
 @Table(name = "item", schema = "erp")
 public class Item implements Serializable {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "item_id_seq")
     @SequenceGenerator(name="item_id_seq", sequenceName = "item_id_seq", allocationSize = 1, schema = "erp")
-    @Column(name="idItem")
+    @Column(name = "iditem")
     Long idItem;
 
-    @Column(name = "descriptionItem", nullable = false)
+    @Column(name = "descriptionitem", nullable = false)
     String description;
 
-    @Column(name = "priceItem", precision = 12, scale = 2)
+    @Column(name = "priceitem", precision = 12, scale = 2)
     BigDecimal priceItem;
 
-    @OneToMany(mappedBy = "idPriceReduction", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "itemPriceReduction", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonManagedReference(value = "priceReductionItem")
     List<PriceReduction> priceReductionItem;
 
-    @OneToMany(mappedBy = "idStateItem", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JsonManagedReference(value = "stateItem")
+    @OneToMany(mappedBy = "stateIdItem", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonManagedReference(value = "stateItems")
     List<StateItem> stateItems;
 
-    @Column(name = "creationDateItem")
+    @Column(name = "creationdateitem")
     LocalDate creationDateItem;
 
-    @Column(name = "idCreatorItem")
+    @Column(name = "idcreatoritem")
     Long idCreatorItem;
 
+
+    public Item(Long idItem, String description, BigDecimal priceItem, List<PriceReduction> priceReductionItem, List<StateItem> stateItems, Long idCreatorItem) {
+        this.idItem = idItem;
+        this.description = description;
+        this.priceItem = priceItem;
+        this.priceReductionItem = priceReductionItem;
+        this.stateItems = stateItems;
+        this.creationDateItem = LocalDate.now();
+        this.idCreatorItem = idCreatorItem;
+
+    }
 
     public Long getIdItem() {
         return idItem;
@@ -81,6 +85,11 @@ public class Item implements Serializable {
         this.priceReductionItem = priceReductionItem;
     }
 
+    public void addPriceReductionItem(List<PriceReduction> priceReductionItem) {
+        this.priceReductionItem = priceReductionItem;
+        priceReductionItem.forEach(priceReductionItemElement -> priceReductionItemElement.setItemPriceReduction(this));
+    }
+
     public List<StateItem> getStateItems() {
         return stateItems;
     }
@@ -89,12 +98,18 @@ public class Item implements Serializable {
         this.stateItems = stateItems;
     }
 
+    public void addStateItem(List<StateItem> stateItem) {
+        this.stateItems = stateItem;
+        stateItem.forEach(stateItem1 -> stateItem1.setIdItem(this));
+    }
+
+
     public LocalDate getCreationDateItem() {
         return creationDateItem;
     }
 
     public void setCreationDateItem(LocalDate creationDateItem) {
-        this.creationDateItem = creationDateItem;
+        this.creationDateItem = LocalDate.now();
     }
 
     public Long getIdCreatorItem() {
@@ -106,5 +121,16 @@ public class Item implements Serializable {
         this.idCreatorItem = idCreatorItem;
     }
 
-
+    @Override
+    public String toString() {
+        return "Item{" +
+                "idItem=" + idItem +
+                ", description='" + description + '\'' +
+                ", priceItem=" + priceItem +
+                ", priceReductionItem=" + priceReductionItem +
+                ", stateItems=" + stateItems +
+                ", creationDateItem=" + creationDateItem +
+                ", idCreatorItem=" + idCreatorItem +
+                '}';
+    }
 }

@@ -1,31 +1,43 @@
 package com.Bitbox.formacionBB2.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "itemPriceReduction", schema = "erp")
+@Table(name = "itempricereduction", schema = "erp")
 public class PriceReduction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pricereduction_id_seq")
     @SequenceGenerator(name="pricereduction_id_seq", sequenceName = "pricereduction_id_seq", allocationSize = 1, schema = "erp")
-    @Column(name="idPriceReduction")
+    @Column(name = "idpricereduction")
     Long idPriceReduction;
 
-    @Column(name = "reducedPrice", precision = 12, scale = 2)
+    @Column(name = "reducedprice", precision = 12, scale = 2, nullable = false)
     BigDecimal reducedPrice;
 
-    @Column(name = "startDatePriceReduction")
+    @Column(name = "startdatepricereduction")
     LocalDate startDatePriceReduction;
 
-    @Column(name = "endDatePriceReduction")
+    @Column(name = "enddatepricereduction")
     LocalDate endDatePriceReduction;
 
-    @ManyToOne()
-    @JoinColumn(name="item_id", referencedColumnName = "idItem", nullable = true, unique =false )
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference(value = "priceReductionItem")
+    @JoinColumn(name = "itempricereduction_id", referencedColumnName = "iditem", nullable = false)
     Item itemPriceReduction;
+
+
+    public PriceReduction(Item itemPriceReduction, BigDecimal reducedPrice) {
+        this.itemPriceReduction = itemPriceReduction;
+        this.reducedPrice = reducedPrice;
+        this.startDatePriceReduction = LocalDate.now();
+        this.endDatePriceReduction = LocalDate.now();
+    }
+
 
     public Long getIdPriceReduction() {
         return idPriceReduction;
@@ -66,5 +78,16 @@ public class PriceReduction {
 
     public void setItemPriceReduction(Item itemPriceReduction) {
         this.itemPriceReduction = itemPriceReduction;
+    }
+
+    @Override
+    public String toString() {
+        return "PriceReduction{" +
+                "idPriceReduction=" + idPriceReduction +
+                ", reducedPrice=" + reducedPrice +
+                ", startDatePriceReduction=" + startDatePriceReduction +
+                ", endDatePriceReduction=" + endDatePriceReduction +
+                ", itemPriceReduction=" + itemPriceReduction +
+                '}';
     }
 }

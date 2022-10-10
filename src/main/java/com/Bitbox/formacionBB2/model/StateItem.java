@@ -1,40 +1,49 @@
 package com.Bitbox.formacionBB2.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
 
 @Entity
+//@Getter
+//@Setter
 @Table(name = "stateitem", schema="erp")
 public class StateItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "stateitem_id_seq")
     @SequenceGenerator(name="stateitem_id_seq", sequenceName = "stateitem_id_seq", allocationSize = 1, schema = "erp")
-    @Column(name="idStateItem")
+    @Column(name = "idstateitem")
     Long idStateItem;
 
-    @Column (name="updateStateItem")
+    @Column(name = "updatestateItem")
     LocalDate updateStateItem;
 
-    @ManyToOne()
-    @JoinColumn(name="item_id")
-    Item idItem;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference(value = "stateItems")
+    @JoinColumn(name = "item_id", referencedColumnName = "iditem", nullable = false)
+    Item stateIdItem;
 
-    @Column (name="active")
+    @Column(name = "active", nullable = false)
     Boolean active;
 
     @Column (name="description")
     String description;
 
 
-    public StateItem(Long idStateItem, LocalDate updateStateItem, Item idItem, Boolean active, String description) {
-        this.idStateItem =idStateItem;
-        this.updateStateItem = updateStateItem;
-        this.idItem = idItem;
+    public StateItem(Item idItem, Boolean active) {
+        this.updateStateItem = LocalDate.now();
+        this.stateIdItem = idItem;
         this.active = active;
-        this.description = description;
+    }
+
+    public StateItem(Item idItem) {
+        this.updateStateItem = LocalDate.now();
+        this.stateIdItem = idItem;
+        this.active = Boolean.TRUE;
     }
 
     public Long getIdStateItem() {
@@ -54,11 +63,11 @@ public class StateItem {
     }
 
     public Item getIdItem() {
-        return idItem;
+        return stateIdItem;
     }
 
     public void setIdItem(Item idItem) {
-        this.idItem = idItem;
+        this.stateIdItem = idItem;
     }
 
     public Boolean getActive() {
@@ -75,5 +84,16 @@ public class StateItem {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "StateItem{" +
+                "idStateItem=" + idStateItem +
+                ", updateStateItem=" + updateStateItem +
+                ", stateIdItem=" + stateIdItem +
+                ", active=" + active +
+                ", description='" + description + '\'' +
+                '}';
     }
 }
