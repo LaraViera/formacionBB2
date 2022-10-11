@@ -105,7 +105,7 @@ public class Item implements Serializable {
 
     public void addStateItem(List<StateItem> stateItem) {
         this.stateItems = stateItem;
-        stateItem.forEach(stateItem1 -> stateItem1.setIdItem(this));
+//        stateItem.forEach(stateItem1 -> stateItem1.setIdItem(this));
     }
 
 
