@@ -2,6 +2,7 @@ package com.Bitbox.formacionBB2.model;
 
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,6 +11,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Table(name = "item", schema = "erp")
 public class Item implements Serializable {
 
@@ -40,6 +42,9 @@ public class Item implements Serializable {
     @Column(name = "idcreatoritem")
     Long idCreatorItem;
 
+    public Item() {
+        this.creationDateItem = LocalDate.now();
+    }
 
     public Item(Long idItem, String description, BigDecimal priceItem, List<PriceReduction> priceReductionItem, List<StateItem> stateItems, Long idCreatorItem) {
         this.idItem = idItem;

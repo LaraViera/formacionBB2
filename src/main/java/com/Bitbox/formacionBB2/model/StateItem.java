@@ -8,8 +8,8 @@ import java.time.LocalDate;
 
 
 @Entity
-//@Getter
-//@Setter
+//@ToString(exclude = "stateIdItem")
+//@EqualsAndHashCode(exclude = "stateIdItem")
 @Table(name = "stateitem", schema="erp")
 public class StateItem {
 
@@ -28,11 +28,10 @@ public class StateItem {
     Item stateIdItem;
 
     @Column(name = "active", nullable = false)
-    Boolean active;
+    Boolean active = Boolean.TRUE;
 
     @Column (name="description")
     String description;
-
 
     public StateItem(Item idItem, Boolean active) {
         this.updateStateItem = LocalDate.now();
@@ -40,10 +39,13 @@ public class StateItem {
         this.active = active;
     }
 
+    public StateItem() {
+        this.updateStateItem = LocalDate.now();
+    }
+
     public StateItem(Item idItem) {
         this.updateStateItem = LocalDate.now();
         this.stateIdItem = idItem;
-        this.active = Boolean.TRUE;
     }
 
     public Long getIdStateItem() {
@@ -91,7 +93,7 @@ public class StateItem {
         return "StateItem{" +
                 "idStateItem=" + idStateItem +
                 ", updateStateItem=" + updateStateItem +
-                ", stateIdItem=" + stateIdItem +
+//                ", stateIdItem=" + stateIdItem +
                 ", active=" + active +
                 ", description='" + description + '\'' +
                 '}';

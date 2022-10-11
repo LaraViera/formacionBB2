@@ -7,6 +7,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
+//@ToString(exclude = "itemPriceReduction")
+//@EqualsAndHashCode(exclude = "itemPriceReduction")
 @Table(name = "itempricereduction", schema = "erp")
 public class PriceReduction {
 
@@ -38,6 +40,10 @@ public class PriceReduction {
         this.endDatePriceReduction = LocalDate.now();
     }
 
+    public PriceReduction() {
+        this.startDatePriceReduction = LocalDate.now();
+        this.endDatePriceReduction = LocalDate.now();
+    }
 
     public Long getIdPriceReduction() {
         return idPriceReduction;
@@ -87,7 +93,7 @@ public class PriceReduction {
                 ", reducedPrice=" + reducedPrice +
                 ", startDatePriceReduction=" + startDatePriceReduction +
                 ", endDatePriceReduction=" + endDatePriceReduction +
-                ", itemPriceReduction=" + itemPriceReduction +
+//                ", itemPriceReduction=" + itemPriceReduction +
                 '}';
     }
 }

@@ -22,6 +22,14 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+   /* @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        if ("javainuse".equals(username)){
+            return new User("javainuse" )
+        }
+        return null;
+    }
+
     /*@Override
     public List<Users> getAllUsers() {
         List<Users> allUsers;
