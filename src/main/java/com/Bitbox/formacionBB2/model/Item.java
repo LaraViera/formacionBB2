@@ -22,6 +22,9 @@ public class Item implements Serializable {
     @Column(name = "iditem")
     Long idItem;
 
+    @Column(name = "itemcode", nullable = false, unique = true)
+    Long itemCode;
+
     @Column(name = "descriptionitem", nullable = false)
     String description;
 
@@ -33,8 +36,8 @@ public class Item implements Serializable {
     List<PriceReduction> priceReductionItem;
 
     @OneToMany(mappedBy = "stateIdItem", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JsonManagedReference(value = "stateItems")
-    List<StateItem> stateItems;
+    @JsonManagedReference(value = "stateItem")
+    List<StateItem> stateItem;
 
     @Column(name = "creationdateitem")
     LocalDate creationDateItem;
@@ -46,12 +49,13 @@ public class Item implements Serializable {
         this.creationDateItem = LocalDate.now();
     }
 
-    public Item(Long idItem, String description, BigDecimal priceItem, List<PriceReduction> priceReductionItem, List<StateItem> stateItems, Long idCreatorItem) {
+    public Item(Long idItem, String description, Long itemCode, BigDecimal priceItem, List<PriceReduction> priceReductionItem, List<StateItem> stateItem, Long idCreatorItem) {
         this.idItem = idItem;
+        this.itemCode = itemCode;
         this.description = description;
         this.priceItem = priceItem;
         this.priceReductionItem = priceReductionItem;
-        this.stateItems = stateItems;
+        this.stateItem = stateItem;
         this.creationDateItem = LocalDate.now();
         this.idCreatorItem = idCreatorItem;
 
@@ -63,6 +67,14 @@ public class Item implements Serializable {
 
     public void setIdItem(Long idItem) {
         this.idItem = idItem;
+    }
+
+    public Long getItemCode() {
+        return itemCode;
+    }
+
+    public void setItemCode(Long itemCode) {
+        this.itemCode = itemCode;
     }
 
     public String getDescription() {
@@ -95,16 +107,16 @@ public class Item implements Serializable {
         priceReductionItem.forEach(priceReductionItemElement -> priceReductionItemElement.setItemPriceReduction(this));
     }
 
-    public List<StateItem> getStateItems() {
-        return stateItems;
+    public List<StateItem> getStateItem() {
+        return stateItem;
     }
 
-    public void setStateItems(List<StateItem> stateItems) {
-        this.stateItems = stateItems;
+    public void setStateItem(List<StateItem> stateItem) {
+        this.stateItem = stateItem;
     }
 
     public void addStateItem(List<StateItem> stateItem) {
-        this.stateItems = stateItem;
+        this.stateItem = stateItem;
 //        stateItem.forEach(stateItem1 -> stateItem1.setIdItem(this));
     }
 
@@ -130,10 +142,11 @@ public class Item implements Serializable {
     public String toString() {
         return "Item{" +
                 "idItem=" + idItem +
+                ", itemCode=" + itemCode +
                 ", description='" + description + '\'' +
                 ", priceItem=" + priceItem +
                 ", priceReductionItem=" + priceReductionItem +
-                ", stateItems=" + stateItems +
+                ", stateItem=" + stateItem +
                 ", creationDateItem=" + creationDateItem +
                 ", idCreatorItem=" + idCreatorItem +
                 '}';

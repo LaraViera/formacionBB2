@@ -27,6 +27,9 @@ public class PriceReduction {
     @Column(name = "enddatepricereduction")
     LocalDate endDatePriceReduction;
 
+    @Column(name = "statepricereduction")
+    Boolean statePriceReduction = Boolean.FALSE;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference(value = "priceReductionItem")
     @JoinColumn(name = "itempricereduction_id", referencedColumnName = "iditem", nullable = false)
@@ -45,6 +48,8 @@ public class PriceReduction {
         this.endDatePriceReduction = LocalDate.now();
     }
 
+
+    // ID de la reducción del precio  //
     public Long getIdPriceReduction() {
         return idPriceReduction;
     }
@@ -53,6 +58,7 @@ public class PriceReduction {
         this.idPriceReduction = idPriceReduction;
     }
 
+    // Precio a reducir //
     public BigDecimal getReducedPrice() {
         return reducedPrice;
     }
@@ -61,6 +67,7 @@ public class PriceReduction {
         this.reducedPrice = reducedPrice;
     }
 
+    // Fecha INICIO //
     public LocalDate getStartDatePriceReduction() {
         return startDatePriceReduction;
     }
@@ -69,6 +76,7 @@ public class PriceReduction {
         this.startDatePriceReduction = startDatePriceReduction;
     }
 
+    // Fecha FIN //
     public LocalDate getEndDatePriceReduction() {
         return endDatePriceReduction;
     }
@@ -77,13 +85,23 @@ public class PriceReduction {
         this.endDatePriceReduction = endDatePriceReduction;
     }
 
-
+    // Item //
     public Item getItemPriceReduction() {
         return itemPriceReduction;
     }
 
     public void setItemPriceReduction(Item itemPriceReduction) {
+
         this.itemPriceReduction = itemPriceReduction;
+    }
+
+    // Estado Activado o no //
+    public Boolean getStatePriceReduction() {
+        return statePriceReduction;
+    }
+
+    public void setStatePriceReduction(Boolean statePriceReduction) {
+        this.statePriceReduction = statePriceReduction;
     }
 
     @Override

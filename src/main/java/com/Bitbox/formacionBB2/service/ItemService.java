@@ -9,4 +9,8 @@ public interface ItemService {
     Boolean saveItem(Item newItem);
 
     List<Item> getAllItems();
+
+    Item findItemByItemcode(Long id);
+
+//    List<PriceReduction> getPriceReductionByIdItem(Long idItem);
 }

@@ -22,7 +22,7 @@ public class StateItem {
     @Column(name = "updatestateItem")
     LocalDate updateStateItem;
 
-    @JsonBackReference(value = "stateItems")
+    @JsonBackReference(value = "stateItem")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id", referencedColumnName = "iditem", nullable = false)
     Item stateIdItem;

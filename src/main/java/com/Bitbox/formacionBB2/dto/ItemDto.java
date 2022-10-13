@@ -1,18 +1,22 @@
 package com.Bitbox.formacionBB2.dto;
 
+import com.Bitbox.formacionBB2.model.PriceReduction;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 
 public class ItemDto {
     Long idCreatorItem;
     Boolean stateItems;
+    Long itemCode;
     //    List<StateItem> stateItems;
     LocalDate creationDateItem;
     String description;
     Long idItem;
     BigDecimal priceItem;
-//    List<PriceReduction> priceReductions;
+    List<PriceReduction> priceReductions;
 
 
     public Long getIdCreatorItem() {
@@ -31,13 +35,14 @@ public class ItemDto {
         this.description = description;
     }
 
-    //    public List<StateItem> getStateItems() {
-//        return stateItems;
-//    }
-//
-//    public void setStateItems(List<StateItem> stateItems) {
-//        this.stateItems = stateItems;
-//    }
+    public Long getItemCode() {
+        return itemCode;
+    }
+
+    public void setItemCode(Long itemCode) {
+        this.itemCode = itemCode;
+    }
+
     public Boolean getStateItems() {
         return stateItems;
     }
@@ -70,11 +75,13 @@ public class ItemDto {
         this.priceItem = price;
     }
 
-//    public List<PriceReduction> getPriceReductions() {
-//        return priceReductions;
-//    }
-//
-//    public void setPriceReductions(List<PriceReduction> priceReductions) {
-//        this.priceReductions = priceReductions;
-//    }
+
+    // Price Reduction
+    public List<PriceReduction> getPriceReductions() {
+        return priceReductions;
+    }
+
+    public void setPriceReductions(List<PriceReduction> priceReductions) {
+        this.priceReductions = priceReductions;
+    }
 }
