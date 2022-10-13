@@ -13,8 +13,12 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
     }
 
     @Override
-//    public Item findItemByItemcode(String itemCode) {
+/*//    public Item findItemByItemcode(String itemCode) {
     public Item findByItemcode(Long itemCode) {
+        return null;
+    }*/
+
+    public Item findPriceReductionActivated(Long itemCode) {
         return null;
     }
 

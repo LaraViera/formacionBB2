@@ -36,16 +36,19 @@ public class PriceReduction {
     Item itemPriceReduction;
 
 
-    public PriceReduction(Item itemPriceReduction, BigDecimal reducedPrice) {
+    public PriceReduction(Item itemPriceReduction, BigDecimal reducedPrice, Boolean statePriceReduction, LocalDate startDate, LocalDate endDate) {
         this.itemPriceReduction = itemPriceReduction;
         this.reducedPrice = reducedPrice;
-        this.startDatePriceReduction = LocalDate.now();
-        this.endDatePriceReduction = LocalDate.now();
+        this.statePriceReduction = statePriceReduction;
+//        this.startDatePriceReduction = LocalDate.now();
+//        this.endDatePriceReduction = LocalDate.now();
+        this.startDatePriceReduction = startDate;
+        this.endDatePriceReduction = endDate;
     }
 
     public PriceReduction() {
-        this.startDatePriceReduction = LocalDate.now();
-        this.endDatePriceReduction = LocalDate.now();
+//        this.startDatePriceReduction = LocalDate.now();
+//        this.endDatePriceReduction = LocalDate.now();
     }
 
 
@@ -111,7 +114,8 @@ public class PriceReduction {
                 ", reducedPrice=" + reducedPrice +
                 ", startDatePriceReduction=" + startDatePriceReduction +
                 ", endDatePriceReduction=" + endDatePriceReduction +
-//                ", itemPriceReduction=" + itemPriceReduction +
+                ", statePriceReduction=" + statePriceReduction +
+                // ", itemPriceReduction=" + itemPriceReduction +
                 '}';
     }
 }

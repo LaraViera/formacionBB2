@@ -10,7 +10,9 @@ public interface ItemService {
 
     List<Item> getAllItems();
 
-    Item findItemByItemcode(Long id);
+    Item findItemByItemcode(Long itemCode);
+
+    Item findPriceReductionActivated(Long itemCode);
 
 //    List<PriceReduction> getPriceReductionByIdItem(Long idItem);
 }

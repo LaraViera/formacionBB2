@@ -1,7 +1,5 @@
 package com.Bitbox.formacionBB2.dto;
 
-import com.Bitbox.formacionBB2.model.PriceReduction;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -16,7 +14,7 @@ public class ItemDto {
     String description;
     Long idItem;
     BigDecimal priceItem;
-    List<PriceReduction> priceReductions;
+    List<PriceReductionDto> priceReductions;
 
 
     public Long getIdCreatorItem() {
@@ -77,11 +75,11 @@ public class ItemDto {
 
 
     // Price Reduction
-    public List<PriceReduction> getPriceReductions() {
+    public List<PriceReductionDto> getPriceReductions() {
         return priceReductions;
     }
 
-    public void setPriceReductions(List<PriceReduction> priceReductions) {
+    public void setPriceReductions(List<PriceReductionDto> priceReductions) {
         this.priceReductions = priceReductions;
     }
 }

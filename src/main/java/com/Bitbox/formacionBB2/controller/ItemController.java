@@ -2,6 +2,7 @@ package com.Bitbox.formacionBB2.controller;
 
 import com.Bitbox.formacionBB2.dto.ItemDto;
 import com.Bitbox.formacionBB2.mapper.ItemMapper;
+import com.Bitbox.formacionBB2.mapper.PriceReductionMapper;
 import com.Bitbox.formacionBB2.model.Item;
 import com.Bitbox.formacionBB2.model.PriceReduction;
 import com.Bitbox.formacionBB2.model.StateItem;
@@ -20,6 +21,9 @@ public class ItemController {
     protected ItemService itemService;
     @Autowired
     private ItemMapper itemMapper;
+
+    @Autowired
+    private PriceReductionMapper priceReductionMapper;
 
     @RequestMapping(value = "/saveItem", method = RequestMethod.POST, consumes = "application/json;charset=UTF-8")
     public Boolean saveItem(@RequestBody Item newItem) {
@@ -43,8 +47,18 @@ public class ItemController {
                 List<PriceReduction> priceReductionNewItem = newItem.getPriceReductionItem();
                 List<PriceReduction> priceReduction = new ArrayList<>();
 
+                PriceReduction priceReductionOld = new PriceReduction();
+
                 for (PriceReduction priceReductionElement : priceReductionNewItem) {
-                    priceReduction.add(new PriceReduction(newItem, priceReductionElement.getReducedPrice()));
+                    if (null != priceReductionOld && priceReductionOld.getStatePriceReduction()) {
+                        // modificamos el elemento anterior para poner su estado a false
+                        priceReduction.get(priceReduction.size() - 1).setStatePriceReduction(false);
+                    }
+                    priceReduction.add(new PriceReduction(newItem, priceReductionElement.getReducedPrice()
+                            , Boolean.TRUE
+                            , priceReductionElement.getStartDatePriceReduction()
+                            , priceReductionElement.getEndDatePriceReduction()));
+                    priceReductionOld = priceReductionElement;
                 }
                 newItem.setPriceReductionItem(priceReduction);
             }
@@ -72,9 +86,10 @@ public class ItemController {
             }
 
             ItemDto itemDto;
-            Item item = itemService.findItemByItemcode(itemCode);
-//            Optional<Item> itemOptional = itemService.getDetailsItemById(idItem);
-//            Item itemDetails = itemOptional.get();
+            Item item = itemService.findPriceReductionActivated(itemCode);
+//            Item item = itemService.findItemByItemcode(itemCode);
+
+//            itemDto = priceReductionMapper.toPriceReductionDto(item);
             itemDto = itemMapper.toItemDto(item);
             return itemDto;
 
