@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "Supplier", schema = "erp")
+@Table(name = "SupplierController", schema = "erp")
 public class Supplier {
 
     @Id
@@ -51,7 +51,7 @@ public class Supplier {
 
     @Override
     public String toString() {
-        return "Supplier{" +
+        return "SupplierController{" +
                 "idSupplier=" + idSupplier +
                 ", name='" + name + '\'' +
                 ", country='" + country + '\'' +
