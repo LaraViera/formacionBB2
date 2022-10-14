@@ -90,7 +90,12 @@ public class ItemController {
 //            Item item = itemService.findItemByItemcode(itemCode);
 
 //            itemDto = priceReductionMapper.toPriceReductionDto(item);
+
+
             itemDto = itemMapper.toItemDto(item);
+
+            itemDto.setPriceReductions(priceReductionMapper.toPriceReductionDtoList(item.getPriceReductionItem()));
+
             return itemDto;
 
         } catch (Exception e) {
