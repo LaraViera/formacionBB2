@@ -5,4 +5,6 @@ import com.Bitbox.formacionBB2.model.Supplier;
 
 public interface SupplierService {
     Boolean newSupplier(Supplier newSupplier);
+
+    Supplier findSupplierByName(String nameSupplier);
 }

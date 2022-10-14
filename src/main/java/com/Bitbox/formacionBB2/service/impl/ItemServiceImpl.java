@@ -40,8 +40,8 @@ public class ItemServiceImpl implements ItemService {
     }
 
     public Item findItemByItemcode(Long itemCode) {
-        return itemRepository.findPriceReductionActivated(itemCode);
-//        return itemRepository.findByItemcode(itemCode);
+//        return itemRepository.findPriceReductionActivated(itemCode);
+        return itemRepository.findByItemcode(itemCode);
 //        return (List<Item>) itemRepository.findItemByItemcode(itemCode.toString());
     }
 

@@ -21,4 +21,13 @@ public class SupplierServiceImpl implements SupplierService {
             return false;
         }
     }
+
+    @Override
+    public Supplier findSupplierByName(String nameSupplier) {
+        try {
+            return supplierRepository.findSupplierByName(nameSupplier);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
 }
