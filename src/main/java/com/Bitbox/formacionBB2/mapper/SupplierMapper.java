@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-import java.util.List;
+import java.util.Set;
 
 @Mapper(componentModel = "spring")
 public interface SupplierMapper {
@@ -18,6 +18,7 @@ public interface SupplierMapper {
     SupplierDto toSupplierDto(Supplier supplier);
 
     @Mapping(ignore = true, target = "itemsSupplier")
-    List<SupplierDto> toSupplierDtoList(List<Supplier> supplier);
+//    List<SupplierDto> toSupplierDtoList(List<Supplier> supplier);
+    Set<SupplierDto> toSupplierDtoList(Set<Supplier> supplier);
 
 }

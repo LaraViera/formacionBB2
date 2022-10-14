@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -108,20 +109,15 @@ public class ItemController {
     }
 
     @GetMapping("/addSupplier")
-    public ItemDto addSupplier(@RequestParam(value = "itemCode") Long itemCode
-//    public Boolean addSupplier(@RequestParam(value= "itemCode")  Long itemCode
+    public Boolean addSupplier(@RequestParam(value = "itemCode") Long itemCode
             , @RequestParam(value = "nameSupplier") String nameSupplier) {
-        // recibimos el código del Item y el código del suministrador
-        // y comprobamos si existe le item, si existe el suministrador y si el suministrador
-        // ya existe en el item, si no lo añadimos
         try {
-            Set<Supplier> supplierSet;
+            Set<Supplier> supplierSet = new HashSet<>();
             if (null == itemCode || null == nameSupplier) {
                 return null;
             }
             Item item = itemService.findItemByItemcode(itemCode);
             Supplier supplier = supplierService.findSupplierByName(nameSupplier);
-            SupplierDto supplierDto = supplierMapper.toSupplierDto(supplier);
             ItemDto itemDto = itemMapper.toItemDto(item);
 
             Set<SupplierDto> supplierDtoSet;
@@ -131,19 +127,23 @@ public class ItemController {
                     return null;
                 }
             }
+
             supplierDtoSet = itemDto.getSuppliersItem();
-            supplierDtoSet.add(supplierDto);
+            supplierDtoSet.add(supplierMapper.toSupplierDto(supplier));
+            Set<Item> itemSetSupplier = supplier.getItemsSupplier();
+            itemSetSupplier.add(new Item(item.getIdItem(), item.getDescription(), item.getItemCode(), item.getPriceItem(), item.getPriceReductionItem(), item.getStateItem(), item.getIdCreatorItem(), item.getSuppliersItem()));
 
-            // TODO COMPROBAR SI FUNCIONA
+            supplierSet = item.getSuppliersItem();
+            supplierSet.add(new Supplier(supplier.getIdSupplier(), nameSupplier, supplier.getCountry(), itemSetSupplier));
+
             itemDto.setSuppliersItem(supplierDtoSet);
-
-            return itemDto;
+            item.setSuppliersItem(supplierSet);
+            itemService.saveItem(item);
+//            return itemMapper.toItemDto(item);
+            return true;
 
         } catch (Exception e) {
-            System.out.print(e);
-            return null;
+            throw e;
         }
-//        return false;
     }
-
 }

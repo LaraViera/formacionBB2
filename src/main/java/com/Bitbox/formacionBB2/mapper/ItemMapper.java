@@ -11,12 +11,15 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = PriceReductionMapper.class)
+@Mapper(componentModel = "spring", uses = {PriceReductionMapper.class, SupplierMapper.class})
 public interface ItemMapper {
-    ItemMapper itemDtoToItem = Mappers.getMapper(ItemMapper.class);
+    ItemMapper INSTANCE = Mappers.getMapper(ItemMapper.class);
 
+//    @Mapping(ignore = true, target = "stateItems")
+//    Item dtoToItem (ItemDto itemDto);
 
     @Mapping(ignore = true, target = "stateItems")
+//    @Mapping(ignore = true, target= "suppliersItem")
     ItemDto toItemDto(Item item);
 
     @Mapping(ignore = true, target = "stateItems")
@@ -30,6 +33,9 @@ public interface ItemMapper {
         StateItem stateItemElement = stateItemList.get(stateItemList.size() - 1);
         itemDto.setStateItems(stateItemElement.getActive());
     }
+
+
+
 
 
 

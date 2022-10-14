@@ -16,7 +16,6 @@ import java.util.Set;
 @Table(name = "item", schema = "erp")
 public class Item implements Serializable {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "item_id_seq")
     @SequenceGenerator(name = "item_id_seq", sequenceName = "item_id_seq", allocationSize = 1, schema = "erp")
@@ -32,23 +31,23 @@ public class Item implements Serializable {
     @Column(name = "priceitem", precision = 12, scale = 2)
     BigDecimal priceItem;
 
+    @OneToMany(mappedBy = "stateIdItem", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonManagedReference(value = "stateItem")
+    List<StateItem> stateItem;
+
     @OneToMany(mappedBy = "itemPriceReduction", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonManagedReference(value = "priceReductionItem")
     List<PriceReduction> priceReductionItem;
 
-    @OneToMany(mappedBy = "stateIdItem", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JsonManagedReference(value = "stateItem")
-    List<StateItem> stateItem;
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @JoinTable(name = "item_supplier", joinColumns = {@JoinColumn(name = "item_id")}, inverseJoinColumns = {@JoinColumn(name = "supplier_id")}, schema = "erp")
+    Set<Supplier> suppliersItem;
 
     @Column(name = "creationdateitem")
     LocalDate creationDateItem;
 
     @Column(name = "idcreatoritem")
     Long idCreatorItem;
-
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "item_supplier", joinColumns = {@JoinColumn(name = "item_id")}, inverseJoinColumns = {@JoinColumn(name = "supplier_id")}, schema = "erp")
-    Set<Supplier> suppliersItem;
 
     public Item() {
         this.creationDateItem = LocalDate.now();
@@ -65,6 +64,7 @@ public class Item implements Serializable {
         this.idCreatorItem = idCreatorItem;
         this.suppliersItem = suppliersItem;
     }
+
 
     public Long getIdItem() {
         return idItem;
