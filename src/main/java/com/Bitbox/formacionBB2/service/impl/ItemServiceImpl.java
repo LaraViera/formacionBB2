@@ -1,11 +1,13 @@
 package com.Bitbox.formacionBB2.service.impl;
 
 import com.Bitbox.formacionBB2.model.Item;
+import com.Bitbox.formacionBB2.model.PriceReduction;
 import com.Bitbox.formacionBB2.repository.ItemRepository;
 import com.Bitbox.formacionBB2.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +28,7 @@ public class ItemServiceImpl implements ItemService {
             itemRepository.save(item);
             return true;
         } catch (Exception e) {
-            return false;
+            throw e;
         }
     }
 
@@ -47,6 +49,60 @@ public class ItemServiceImpl implements ItemService {
     public Item findPriceReductionActivated(Long itemCode) {
         return itemRepository.findPriceReductionActivated(itemCode);
     }
+
+    @Override
+    public List<PriceReduction> addPriceReductionToItem(Item newItem) {
+        List<PriceReduction> priceReductionNewItem = newItem.getPriceReductionItem();
+        PriceReduction priceReductionOld = new PriceReduction();
+        List<PriceReduction> priceReduction = new ArrayList<>();
+
+
+        /*for (PriceReduction priceReductionElement : priceReductionNewItem) {
+            if (null != priceReductionOld && priceReductionOld.getStatePriceReduction() && priceReductionElement.getStatePriceReduction()) {
+                // modificamos el elemento anterior para poner su estado a false
+                priceReduction.get(priceReduction.size() - 1).setStatePriceReduction(false);
+            }
+            priceReduction.add(new PriceReduction(newItem, priceReductionElement.getReducedPrice()
+                    , priceReductionElement.getStatePriceReduction()
+//                    , Boolean.TRUE
+                    , priceReductionElement.getStartDatePriceReduction()
+                    , priceReductionElement.getEndDatePriceReduction()));
+            priceReductionOld = priceReductionElement;
+        }*/
+        for (PriceReduction priceReductionElement : priceReductionNewItem) {
+            if (null != priceReductionOld && priceReductionOld.getStatePriceReduction() && priceReductionElement.getStatePriceReduction()) {
+                // modificamos el elemento anterior para poner su estado a false
+                priceReduction.get(priceReduction.size() - 1).setStatePriceReduction(false);
+            }
+            priceReduction.add(new PriceReduction(newItem, priceReductionElement.getReducedPrice()
+                    , priceReductionElement.getStatePriceReduction()
+//                    , Boolean.TRUE
+                    , priceReductionElement.getStartDatePriceReduction()
+                    , priceReductionElement.getEndDatePriceReduction()));
+            if (priceReductionElement.getStatePriceReduction()) {
+                priceReductionOld = priceReductionElement;
+            }
+        }
+
+        return priceReduction;
+    }
+
+    @Override
+    public void checkStatePriceReduction(Item item) {
+        PriceReduction priceReductionOld = new PriceReduction();
+        List<PriceReduction> priceReduction = new ArrayList<>();
+
+        for (PriceReduction priceReductionElement : item.getPriceReductionItem()) {
+            if (null != priceReductionOld && priceReductionOld.getStatePriceReduction() && priceReductionElement.getStatePriceReduction()) {
+                priceReductionOld.setStatePriceReduction(false);
+                priceReductionOld.setItemPriceReduction(item);
+            }
+            if (priceReductionElement.getStatePriceReduction()) {
+                priceReductionOld = priceReductionElement;
+            }
+        }
+    }
+
 
 //    public List<PriceReduction> getPriceReductionByIdItem(Long idItem) {
 //        return itemRepository.getPriceReductionByIdItem(idItem);

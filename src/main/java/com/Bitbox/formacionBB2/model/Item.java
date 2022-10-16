@@ -107,9 +107,11 @@ public class Item implements Serializable {
         this.priceReductionItem = priceReductionItem;
     }
 
-    public void addPriceReductionItem(List<PriceReduction> priceReductionItem) {
-        this.priceReductionItem = priceReductionItem;
-        priceReductionItem.forEach(priceReductionItemElement -> priceReductionItemElement.setItemPriceReduction(this));
+    public void addPriceReductionItem(PriceReduction priceReductionItem) {
+//    public void addPriceReductionItem(List<PriceReduction> priceReductionItem) {
+        this.priceReductionItem.add(priceReductionItem);
+
+        priceReductionItem.setItemPriceReduction(this);
     }
 
     public List<StateItem> getStateItem() {
@@ -120,8 +122,9 @@ public class Item implements Serializable {
         this.stateItem = stateItem;
     }
 
-    public void addStateItem(List<StateItem> stateItem) {
-        this.stateItem = stateItem;
+    public void addStateItem(StateItem stateItem) {
+        this.stateItem.add(stateItem);
+        stateItem.setIdItem(this);
     }
 
     public LocalDate getCreationDateItem() {

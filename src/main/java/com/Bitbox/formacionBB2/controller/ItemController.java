@@ -6,12 +6,12 @@ import com.Bitbox.formacionBB2.mapper.ItemMapper;
 import com.Bitbox.formacionBB2.mapper.PriceReductionMapper;
 import com.Bitbox.formacionBB2.mapper.SupplierMapper;
 import com.Bitbox.formacionBB2.model.Item;
-import com.Bitbox.formacionBB2.model.PriceReduction;
 import com.Bitbox.formacionBB2.model.StateItem;
 import com.Bitbox.formacionBB2.model.Supplier;
 import com.Bitbox.formacionBB2.service.ItemService;
 import com.Bitbox.formacionBB2.service.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -26,14 +26,15 @@ public class ItemController {
     @Autowired
     protected ItemService itemService;
     @Autowired
-    private SupplierService supplierService;
-    @Autowired
-    private SupplierMapper supplierMapper;
-    @Autowired
     private ItemMapper itemMapper;
 
     @Autowired
     private PriceReductionMapper priceReductionMapper;
+
+    @Autowired
+    private SupplierService supplierService;
+    @Autowired
+    private SupplierMapper supplierMapper;
 
     @RequestMapping(value = "/saveItem", method = RequestMethod.POST, consumes = "application/json;charset=UTF-8")
 //    @PostMapping(value = "/saveItem", consumes = "application/json;charset.set=UTF=8")
@@ -55,7 +56,7 @@ public class ItemController {
                 newItem.setStateItem(stateItems);
             }
             if (null != newItem.getPriceReductionItem()) {
-                List<PriceReduction> priceReductionNewItem = newItem.getPriceReductionItem();
+              /*  List<PriceReduction> priceReductionNewItem = newItem.getPriceReductionItem();
                 List<PriceReduction> priceReduction = new ArrayList<>();
 
                 PriceReduction priceReductionOld = new PriceReduction();
@@ -70,14 +71,65 @@ public class ItemController {
                             , priceReductionElement.getStartDatePriceReduction()
                             , priceReductionElement.getEndDatePriceReduction()));
                     priceReductionOld = priceReductionElement;
-                }
-                newItem.setPriceReductionItem(priceReduction);
+                }*/
+                newItem.setPriceReductionItem(itemService.addPriceReductionToItem(newItem));
             }
             return itemService.saveItem(newItem);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return false;
         }
+    }
+
+    // TODO error al añadir un nuevo PR, ya que auqnue lo añade, no pone desactiva el anterior
+    @PutMapping(value = "/editItem", consumes = "application/json;charset=UTF-8")
+//    @PutMapping (value="/editItem/{codeItem}", consumes = "application/json;charset=UTF-8")
+    public ResponseEntity<Object> updateItem(@RequestBody Item editItem) {
+        try {
+//           Item item = new Item();
+//           Item itemModify = new Item();
+            if (null != editItem.getItemCode()) {
+                Item item = itemService.findItemByItemcode(editItem.getItemCode());
+                // comprobamos que el codeItem existe y que es un item activo
+                if (null != item && (item.getStateItem().get(item.getStateItem().size() - 1).getActive())) {
+                    // editamos Price si es =! null
+                    if (null != editItem.getPriceItem()) {
+                        item.setPriceItem(editItem.getPriceItem());
+                    }
+                    // editamos Description si es =! null
+                    if (null != editItem.getDescription()) {
+                        item.setDescription(editItem.getDescription());
+                    }
+                    //editamos State si es =! null
+                    if (null != editItem.getStateItem()) {
+                        item.addStateItem(new StateItem(item, editItem.getStateItem().get(item.getStateItem().size() - 1).getActive()));
+                    }
+                    // editamos PriceReductionItem si es =! null
+                    if (null != editItem.getPriceReductionItem()) {
+                        // comprobamos si las reducciones de precio existen y si no lo añadimos
+                        item.addPriceReductionItem(itemService.addPriceReductionToItem(editItem).get(itemService.addPriceReductionToItem(editItem).size() - 1));
+
+//                        itemService.checkStatePriceReduction(item);
+                    }
+                    // editamos los suministradores (desplegable, solo se podrá modificar de 1 en 1)
+                    if (null != editItem.getSuppliersItem()) {
+                        for (Supplier supplier : editItem.getSuppliersItem()) {
+                            addSupplier(editItem.getItemCode(), supplier.getName());
+                        }
+                    }
+                } else {
+                    throw new IllegalArgumentException("El codigo del item no existe");
+                }
+                itemService.saveItem(item);
+
+                return ResponseEntity.ok().build();
+            }
+            // itemRepository.save(editItem);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            throw e;
+        }
+
     }
 
 
