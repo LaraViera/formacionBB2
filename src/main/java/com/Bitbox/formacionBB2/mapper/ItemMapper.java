@@ -30,42 +30,10 @@ public interface ItemMapper {
     @AfterMapping
     default void addState(@MappingTarget ItemDto itemDto, Item item) {
         List<StateItem> stateItemList = item.getStateItem();
-        StateItem stateItemElement = stateItemList.get(stateItemList.size() - 1);
+        if (stateItemList.size() != 0) {
+            StateItem stateItemElement = stateItemList.get(stateItemList.size() - 1);
+
         itemDto.setStateItems(stateItemElement.getActive());
-    }
-
-
-
-
-
-
-    /*@AfterMapping
-    default void addPriceReduction(@MappingTarget ItemDto itemDto, Item item) {
-        List<PriceReduction> priceReductionList = item.getPriceReductionItem();
-        List<PriceReductionDto> priceReductionDtoList = null;
-        for (PriceReduction priceReductionElement : priceReductionList) {
-            // TODO error de null pointer porque PRMapper está inicializada a null, hay que llamar de un mapper a otro o
-            //hacerlo todo en el mismo auqnue no sé si se puede hacer.
-            priceReductionDtoList.add(priceReductionMapper.toPriceReductionDto(priceReductionElement));
         }
-        itemDto.setPriceReductions(priceReductionDtoList);
-    }*/
-
-//    @AfterMapping
-//    default void addPriceReduction(@MappingTarget ItemDto itemDto, Item item) {
-//        // lista de todos los priceReductions
-//        List<PriceReduction> priceReductionList= item.getPriceReductionItem();
-//
-//        List<PriceReduction> priceReductionListDto = new ArrayList<>();
-//
-//        // Recorremos todos los elementos de la lista de Pr y los vamos añadiendo al DTO, sin el campo de itemPriceREduction (?)
-//        //TODO recorrer y No tener dos precios rebajados a la vez, que si insertas una rebaja nueva la otra se caduque, en el detalle si muestras todo
-//        for (PriceReduction priceReductionElement : priceReductionList){
-//            if(priceReductionElement.getStatePriceReduction()){
-////                itemDto.setPriceReductions(priceReductionElement.getReducedPrice());
-//                priceReductionListDto.add(priceReductionElement);
-//            }
-//        }
-//
-//    }
+    }
 }

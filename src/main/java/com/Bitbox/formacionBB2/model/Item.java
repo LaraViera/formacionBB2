@@ -53,6 +53,13 @@ public class Item implements Serializable {
         this.creationDateItem = LocalDate.now();
     }
 
+    public Item(Long itemCode, String description, BigDecimal priceItem, List<StateItem> stateItem) {
+        this.itemCode = itemCode;
+        this.description = description;
+        this.priceItem = priceItem;
+        this.stateItem = stateItem;
+    }
+
     public Item(Long idItem, String description, Long itemCode, BigDecimal priceItem, List<PriceReduction> priceReductionItem, List<StateItem> stateItem, Long idCreatorItem, Set<Supplier> suppliersItem) {
         this.idItem = idItem;
         this.itemCode = itemCode;

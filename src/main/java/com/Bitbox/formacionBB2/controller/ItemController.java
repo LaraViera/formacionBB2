@@ -37,7 +37,6 @@ public class ItemController {
     private SupplierMapper supplierMapper;
 
     @RequestMapping(value = "/saveItem", method = RequestMethod.POST, consumes = "application/json;charset=UTF-8")
-//    @PostMapping(value = "/saveItem", consumes = "application/json;charset.set=UTF=8")
     public Boolean saveItem(@RequestBody Item newItem) {
         try {
             List<StateItem> stateItems = new ArrayList<>();
