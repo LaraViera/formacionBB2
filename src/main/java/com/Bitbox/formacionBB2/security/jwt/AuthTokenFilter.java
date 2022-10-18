@@ -2,6 +2,7 @@ package com.Bitbox.formacionBB2.security.jwt;
 
 //TODO AuthTokenFilter
 
+import com.Bitbox.formacionBB2.security.services.UserDetailsServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +21,13 @@ import java.io.IOException;
 
 // TODO https://github.com/bezkoder/spring-boot-spring-security-jwt-authentication/blob/master/src/main/java/com/bezkoder/springjwt/security/jwt/AuthTokenFilter.java
 public class AuthTokenFilter extends OncePerRequestFilter {
-
     @Autowired
     JwtUtils jwtUtils;
 
-    Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
-
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
+
+    Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain
@@ -35,9 +35,9 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         try {
             String jwt = parseJwt(request);
             if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
-                String username = jwtUtils.getUserNamefromJwtToken(jwt);
+                String username = jwtUtils.getUserNameFromJwtToken(jwt);
 
-                UserDetails userDetails = userDetailsService.loadUserbyUsername(username);
+                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 

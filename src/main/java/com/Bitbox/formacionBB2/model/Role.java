@@ -14,13 +14,13 @@ public class Role {
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
-    RoleEnum nameRole;
+    RoleEnum name;
 
     public Role() {
     }
 
     public Role(RoleEnum roleEnum) {
-        this.nameRole = roleEnum;
+        this.name = roleEnum;
     }
 
     public Long getIdRole() {
@@ -31,11 +31,11 @@ public class Role {
         this.idRole = idRole;
     }
 
-    public RoleEnum getNameRole() {
-        return nameRole;
+    public RoleEnum getName() {
+        return name;
     }
 
-    public void setNameRole(RoleEnum nameRole) {
-        this.nameRole = nameRole;
+    public void setName(RoleEnum nameRole) {
+        this.name = nameRole;
     }
 }
