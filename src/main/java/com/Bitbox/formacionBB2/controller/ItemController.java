@@ -55,22 +55,6 @@ public class ItemController {
                 newItem.setStateItem(stateItems);
             }
             if (null != newItem.getPriceReductionItem()) {
-              /*  List<PriceReduction> priceReductionNewItem = newItem.getPriceReductionItem();
-                List<PriceReduction> priceReduction = new ArrayList<>();
-
-                PriceReduction priceReductionOld = new PriceReduction();
-
-                for (PriceReduction priceReductionElement : priceReductionNewItem) {
-                    if (null != priceReductionOld && priceReductionOld.getStatePriceReduction()) {
-                        // modificamos el elemento anterior para poner su estado a false
-                        priceReduction.get(priceReduction.size() - 1).setStatePriceReduction(false);
-                    }
-                    priceReduction.add(new PriceReduction(newItem, priceReductionElement.getReducedPrice()
-                            , Boolean.TRUE
-                            , priceReductionElement.getStartDatePriceReduction()
-                            , priceReductionElement.getEndDatePriceReduction()));
-                    priceReductionOld = priceReductionElement;
-                }*/
                 newItem.setPriceReductionItem(itemService.addPriceReductionToItem(newItem));
             }
             return itemService.saveItem(newItem);
