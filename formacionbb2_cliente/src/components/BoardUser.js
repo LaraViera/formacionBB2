@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, {useEffect, useState} from "react";
 
 import UserService from "../services/user.service";
 
 // para controlar la expiración del JWT token
-import eventBus from "../EventBus";
+import eventBus from "../common/EventBus";
 
 const BoardUser = () => {
     const [content, setContent] = useState("");

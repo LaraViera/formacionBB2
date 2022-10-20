@@ -14,8 +14,7 @@ import BoardAdmin from "./components/BoardAdmin";
 
 import { logout } from './slices/auth';
 
-import eventBus from './EventBus';
-
+import eventBus from '../src/common/EventBus'
 
 const App = () => {
   const [showAdminBoard, setShowAdminBoard] = useState(false);
@@ -83,9 +82,9 @@ const App = () => {
               </Link>
             </li>
             <li className="nav-item">
-              <a href="/login" className="nav-link" onClick={logOut}>
-                LogOut
-              </a>
+                <a href="/login" className="nav-link" onClick={logOut}>
+                    LogOut
+                </a>
             </li>
           </div>
         ) : (

@@ -33,8 +33,10 @@ public class DatabaseLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         this.itemRepository.save(new Item(123L, "Item 2", new BigDecimal("800"), stateItem));
-        this.userRepository.save(new Users("user", "user@user.com", "123456", Collections.singleton(new Role(RoleEnum.USER))));
-        this.roleRepository.save(new Role(RoleEnum.ADMIN));
+        this.userRepository.save(new Users("user", "user@user.com", "123456", Collections.singleton(new Role(RoleEnum.ROLE_USER))));
+//        this.userRepository.save(new Users("user", "user@user.com", "123456", Collections.singleton(new Role(RoleEnum.USER))));
+        this.roleRepository.save(new Role(RoleEnum.ROLE_ADMIN));
+//        this.roleRepository.save(new Role(RoleEnum.ADMIN));
 //        this.roleRepository.save(new Role(RoleEnum.USER));
     }
 
