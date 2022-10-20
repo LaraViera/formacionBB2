@@ -8,7 +8,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<Users, String> {
+public interface UserRepository extends JpaRepository<Users, Long> {
+//public interface UserRepository extends JpaRepository<Users, String> {
 
     public List<Users> findByUsernameAndPassword(String userName, String password);
 

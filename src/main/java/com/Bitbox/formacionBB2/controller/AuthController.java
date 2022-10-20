@@ -26,6 +26,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+// https://www.bezkoder.com/spring-boot-jwt-authentication/ -> Create Spring RestAPIs Controller
+
 // REST API para la Autenticación
 // UserController se utilizó para la comprobación de la BBDD durante el desarrollo de las tablas del servidor
 @CrossOrigin(origins = "*", maxAge = 3600)

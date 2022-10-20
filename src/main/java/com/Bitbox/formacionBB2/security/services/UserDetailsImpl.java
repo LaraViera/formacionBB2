@@ -12,7 +12,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class UserDetailsImpl implements UserDetails {
-    static long serialVersionUID = 1L;
+    private static long serialVersionUID = 1L;
 
     Long idUser;
     String username;
@@ -45,13 +45,6 @@ public class UserDetailsImpl implements UserDetails {
                 authorities);
     }
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
-    public static void setSerialVersionUID(long serialVersionUID) {
-        UserDetailsImpl.serialVersionUID = serialVersionUID;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
