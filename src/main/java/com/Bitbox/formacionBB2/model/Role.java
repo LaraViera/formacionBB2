@@ -3,7 +3,7 @@ package com.Bitbox.formacionBB2.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "roles")
+@Table(name = "roles", schema = "erp")
 public class Role {
 
     @Id

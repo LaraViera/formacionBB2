@@ -1,7 +1,10 @@
 package com.Bitbox.formacionBB2.model;
 
 public enum RoleEnum {
-    ADMIN(1, "ROLE_ADMIN"),
+
+    ROLE_USER,
+    ROLE_ADMIN
+   /* ADMIN(1, "ROLE_ADMIN"),
     USER(2, "ROLE_USER");
     Integer id;
     String valor;
@@ -30,5 +33,6 @@ public enum RoleEnum {
         }
         return null;
     }
+*/
 
 }

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping(path = "/user")
+@RequestMapping(path = "/user/test")
 public class UserController {
 
     @Autowired
@@ -36,24 +36,4 @@ public class UserController {
         return "Admin Access";
     }
 
-    /*@RequestMapping(value = "/all", method = RequestMethod.GET)
-    public List<Users> getUsers() {
-        return userService.getAllUsers();
-    }*/
-
-    /*@RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Users login(@RequestParam("username") String username, @RequestParam ("password") String pwd){
-
-        String token = getJWTToken(username);
-        Users user = new Users();
-        user.setUsername(username);
-        user.setPassword(pwd);
-        return user;
-    }
-
-    private String getJWTToken(String username) {
-        String secretKey = "mysecretkey";
-        List<GrantedAuthority> grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_USER");
-        return null; // TODO terminar jwt
-    }*/
 }

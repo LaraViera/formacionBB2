@@ -3,7 +3,6 @@ package com.Bitbox.formacionBB2.payload.request;
 import javax.validation.constraints.NotBlank;
 
 public class LoginRequest {
-
     @NotBlank
     private String username;
 

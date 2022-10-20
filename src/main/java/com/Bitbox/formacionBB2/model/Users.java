@@ -110,14 +110,26 @@ public class Users {
     @Column(name = "user_password", nullable = false)
     String password;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "roles_id"))
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "roles_id"), schema = "erp")
     Set<Role> roles = new HashSet<>();
+
+
+    public Users() {
+    }
 
     public Users(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
+//        this.roles= Arrays.asList(RoleEnum.USER);
+    }
+
+    public Users(String username, String email, String password, Set<Role> roles) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
     }
 
     public Long getIdUsers() {
