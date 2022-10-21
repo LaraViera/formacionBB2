@@ -57,21 +57,8 @@ public class ItemServiceImpl implements ItemService {
         List<PriceReduction> priceReduction = new ArrayList<>();
 
 
-        /*for (PriceReduction priceReductionElement : priceReductionNewItem) {
-            if (null != priceReductionOld && priceReductionOld.getStatePriceReduction() && priceReductionElement.getStatePriceReduction()) {
-                // modificamos el elemento anterior para poner su estado a false
-                priceReduction.get(priceReduction.size() - 1).setStatePriceReduction(false);
-            }
-            priceReduction.add(new PriceReduction(newItem, priceReductionElement.getReducedPrice()
-                    , priceReductionElement.getStatePriceReduction()
-//                    , Boolean.TRUE
-                    , priceReductionElement.getStartDatePriceReduction()
-                    , priceReductionElement.getEndDatePriceReduction()));
-            priceReductionOld = priceReductionElement;
-        }*/
         for (PriceReduction priceReductionElement : priceReductionNewItem) {
             if (null != priceReductionOld && priceReductionOld.getStatePriceReduction() && priceReductionElement.getStatePriceReduction()) {
-                // modificamos el elemento anterior para poner su estado a false
                 priceReduction.get(priceReduction.size() - 1).setStatePriceReduction(false);
             }
             priceReduction.add(new PriceReduction(newItem, priceReductionElement.getReducedPrice()
@@ -102,11 +89,6 @@ public class ItemServiceImpl implements ItemService {
             }
         }
     }
-
-
-//    public List<PriceReduction> getPriceReductionByIdItem(Long idItem) {
-//        return itemRepository.getPriceReductionByIdItem(idItem);
-//    }
 
 
 }

@@ -14,9 +14,5 @@ public interface ItemRepositoryCustom {
 
     @Query(nativeQuery = true, value = "SELECT * FROM ERP.ITEM as item INNER JOIN ERP.STATEITEM  AS state inner join ERP.ITEMPRICEREDUCTION as pricereduction WHERE item.iditem =state.item_id AND item.itemcode= :itemCode AND item.iditem=pricereduction.itempricereduction_id")
     Item findPriceReductionActivated(Long itemCode);
-//    Item findPriceReductionActivated(List<PriceReduction> priceReduction);
-
-//    @Query(nativeQuery = true, value = "SELECT * FROM ERP.ITEM  AS item INNER JOIN ERP.STATEITEM  AS state WHERE item.iditem =state.item_id AND item.itemcode= :itemCode")
-//   List<PriceReduction> getPriceReductionByIdItem(Long idItem);
 
 }

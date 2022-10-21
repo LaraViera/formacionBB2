@@ -18,7 +18,4 @@ public interface ItemService {
     List<PriceReduction> addPriceReductionToItem(Item newItem);
 
     void checkStatePriceReduction(Item item);
-
-
-//    List<PriceReduction> getPriceReductionByIdItem(Long idItem);
 }

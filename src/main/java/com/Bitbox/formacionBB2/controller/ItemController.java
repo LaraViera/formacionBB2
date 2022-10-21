@@ -66,11 +66,8 @@ public class ItemController {
 
     // TODO error al añadir un nuevo PR, ya que auqnue lo añade, no pone desactiva el anterior
     @PutMapping(value = "/editItem", consumes = "application/json;charset=UTF-8")
-//    @PutMapping (value="/editItem/{codeItem}", consumes = "application/json;charset=UTF-8")
     public ResponseEntity<Object> updateItem(@RequestBody Item editItem) {
         try {
-//           Item item = new Item();
-//           Item itemModify = new Item();
             if (null != editItem.getItemCode()) {
                 Item item = itemService.findItemByItemcode(editItem.getItemCode());
                 // comprobamos que el codeItem existe y que es un item activo
@@ -92,7 +89,6 @@ public class ItemController {
                         // comprobamos si las reducciones de precio existen y si no lo añadimos
                         item.addPriceReductionItem(itemService.addPriceReductionToItem(editItem).get(itemService.addPriceReductionToItem(editItem).size() - 1));
 
-//                        itemService.checkStatePriceReduction(item);
                     }
                     // editamos los suministradores (desplegable, solo se podrá modificar de 1 en 1)
                     if (null != editItem.getSuppliersItem()) {
@@ -107,7 +103,6 @@ public class ItemController {
 
                 return ResponseEntity.ok().build();
             }
-            // itemRepository.save(editItem);
             return ResponseEntity.noContent().build();
         } catch (Exception e) {
             throw e;
@@ -174,7 +169,6 @@ public class ItemController {
             itemDto.setSuppliersItem(supplierDtoSet);
             item.setSuppliersItem(supplierSet);
             itemService.saveItem(item);
-//            return itemMapper.toItemDto(item);
             return true;
 
         } catch (Exception e) {
