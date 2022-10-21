@@ -3,19 +3,22 @@ import ItemDataService from "../services/item.service";
 
 const Item = props => {
     const initialItemState = {
-        id: null,
-        price: "",
+        idItem: null,
+        itemCode:"",
         description: "",
+        priceItem: "",
+        creationDate:"",
+        creator:"",
         state: false
     };
     const [currentItem, setCurrentItem] = useState(initialItemState);
     const [message, setMessage] = useState("");
 
-    const getItem = id => {
-        ItemDataService.get(id)
+    const getItem = idItem => {
+        ItemDataService.get(idItem)
             .then(response => {
                 setCurrentItem(response.data);
-                console.log(response.data);
+                console.log('Item: ',response.data);
             })
             .catch(e => {
                 console.log(e);
@@ -23,8 +26,8 @@ const Item = props => {
     };
 
     useEffect(() => {
-        getItem(props.match.params.id);
-    }, [props.match.params.id]);
+        getItem(props.match.params.idItem);
+    }, [props.match.params.idItem]);
 
     const handleInputChange = event => {
         const {name, value} = event.target;
@@ -32,14 +35,17 @@ const Item = props => {
     };
 
     const updatestate = status => {
-        var data = {
-            id: currentItem.id,
-            price: currentItem.price,
+        let data = {
+            idItem: currentItem.idItem,
+            itemCode:currentItem.itemCode,
             description: currentItem.description,
+            priceItem: currentItem.priceItem,
+            creationDate:currentItem.creationDate,
+            creator:currentItem.creator,
             state: status
         };
 
-        ItemDataService.update(currentItem.id, data)
+        ItemDataService.update(currentItem.idItem, data)
             .then(response => {
                 setCurrentItem({...currentItem, state: status});
                 console.log(response.data);
@@ -51,7 +57,7 @@ const Item = props => {
     };
 
     const updateItem = () => {
-        ItemDataService.update(currentItem.id, currentItem)
+        ItemDataService.update(currentItem.idItem, currentItem)
             .then(response => {
                 console.log(response.data);
                 setMessage("The Item was updated successfully!");
@@ -62,7 +68,7 @@ const Item = props => {
     };
 
     const deleteItem = () => {
-        ItemDataService.remove(currentItem.id)
+        ItemDataService.remove(currentItem.idItem)
             .then(response => {
                 console.log(response.data);
                 props.history.push("/Items");
@@ -78,14 +84,14 @@ const Item = props => {
                 <div className="edit-form">
                     <h4>Item</h4>
                     <form>
-                        <div className="form-group">
-                            <label htmlFor="price">price</label>
+                    <div className="form-group">
+                            <label htmlFor="itemCode">Item Code</label>
                             <input
                                 type="text"
                                 className="form-control"
-                                id="price"
-                                name="price"
-                                value={currentItem.price}
+                                idItem="itemCode"
+                                name="itemCode"
+                                value={currentItem.itemCode}
                                 onChange={handleInputChange}
                             />
                         </div>
@@ -94,9 +100,42 @@ const Item = props => {
                             <input
                                 type="text"
                                 className="form-control"
-                                id="description"
+                                idItem="description"
                                 name="description"
                                 value={currentItem.description}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="priceItem">Price</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                idItem="priceItem"
+                                name="priceItem"
+                                value={currentItem.priceItem}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="creationDate">Creation Date</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                idItem="creationDate"
+                                name="creationDate"
+                                value={currentItem.creationDate}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="creator">idItem creator</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                idItem="creator"
+                                name="creator"
+                                value={currentItem.creator}
                                 onChange={handleInputChange}
                             />
                         </div>

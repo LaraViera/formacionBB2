@@ -17,7 +17,7 @@ const AddItem = () => {
     };
 
     const saveItem = () => {
-        var data = {
+        let data = {
             price: Item.price,
             description: Item.description
         };

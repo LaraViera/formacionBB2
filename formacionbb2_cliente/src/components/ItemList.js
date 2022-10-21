@@ -1,6 +1,6 @@
-import React, {useEffect, useMemo, useRef, useState} from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import ItemDataService from "../services/item.service";
-import {useTable} from "react-table";
+import { useTable } from "react-table";
 
 const ItemsList = (props) => {
     const [Items, setItems] = useState([]);
@@ -21,6 +21,7 @@ const ItemsList = (props) => {
     const retrieveItems = () => {
         ItemDataService.getAll()
             .then((response) => {
+                console.log('ItemList: ',response.data)
                 setItems(response.data);
             })
             .catch((e) => {
@@ -56,7 +57,7 @@ const ItemsList = (props) => {
     const openItem = (rowIndex) => {
         const id = ItemsRef.current[rowIndex].id;
 
-        props.history.push("/Items/" + id);
+        props.history.push("/Item/" + id);
     };
 
     const deleteItem = (rowIndex) => {
@@ -64,7 +65,7 @@ const ItemsList = (props) => {
 
         ItemDataService.remove(id)
             .then((response) => {
-                props.history.push("/Items");
+                props.history.push("/Item");
 
                 let newItems = [...ItemsRef.current];
                 newItems.splice(rowIndex, 1);
@@ -79,18 +80,30 @@ const ItemsList = (props) => {
     const columns = useMemo(
         () => [
             {
-                Header: "Price",
-                accessor: "price",
+                Header: "Item Code",
+                accessor: "itemCode",
             },
             {
                 Header: "Description",
                 accessor: "description",
             },
             {
+                Header: "Price",
+                accessor: "priceItem",
+            },
+            {
+                Header: "Creation Date",
+                accessor: "creationDate",
+            },
+            {
+                Header: "Creator",
+                accessor: "creator",
+            },
+            {
                 Header: "Status",
-                accessor: "published",
+                accessor: "state",
                 Cell: (props) => {
-                    return props.value ? "Published" : "Pending";
+                    return props.value ? "Active" : "Discontinued";
                 },
             },
             {
@@ -100,13 +113,13 @@ const ItemsList = (props) => {
                     const rowIdx = props.row.id;
                     return (
                         <div>
-              <span onClick={() => openItem(rowIdx)}>
-                <i className="far fa-edit action mr-2"></i>
-              </span>
+                            <span onClick={() => openItem(rowIdx)}>
+                                <i className="far fa-edit action mr-2"></i>
+                            </span>
 
                             <span onClick={() => deleteItem(rowIdx)}>
-                <i className="fas fa-trash action"></i>
-              </span>
+                                <i className="fas fa-trash action"></i>
+                            </span>
                         </div>
                     );
                 },
@@ -154,29 +167,29 @@ const ItemsList = (props) => {
                     {...getTableProps()}
                 >
                     <thead>
-                    {headerGroups.map((headerGroup) => (
-                        <tr {...headerGroup.getHeaderGroupProps()}>
-                            {headerGroup.headers.map((column) => (
-                                <th {...column.getHeaderProps()}>
-                                    {column.render("Header")}
-                                </th>
-                            ))}
-                        </tr>
-                    ))}
+                        {headerGroups.map((headerGroup) => (
+                            <tr {...headerGroup.getHeaderGroupProps()}>
+                                {headerGroup.headers.map((column) => (
+                                    <th {...column.getHeaderProps()}>
+                                        {column.render("Header")}
+                                    </th>
+                                ))}
+                            </tr>
+                        ))}
                     </thead>
                     <tbody {...getTableBodyProps()}>
-                    {rows.map((row, i) => {
-                        prepareRow(row);
-                        return (
-                            <tr {...row.getRowProps()}>
-                                {row.cells.map((cell) => {
-                                    return (
-                                        <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
-                                    );
-                                })}
-                            </tr>
-                        );
-                    })}
+                        {rows.map((row, i) => {
+                            prepareRow(row);
+                            return (
+                                <tr {...row.getRowProps()}>
+                                    {row.cells.map((cell) => {
+                                        return (
+                                            <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                                        );
+                                    })}
+                                </tr>
+                            );
+                        })}
                     </tbody>
                 </table>
             </div>
