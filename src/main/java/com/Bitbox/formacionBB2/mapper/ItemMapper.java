@@ -15,11 +15,7 @@ import java.util.List;
 public interface ItemMapper {
     ItemMapper INSTANCE = Mappers.getMapper(ItemMapper.class);
 
-//    @Mapping(ignore = true, target = "stateItems")
-//    Item dtoToItem (ItemDto itemDto);
-
     @Mapping(ignore = true, target = "stateItems")
-//    @Mapping(ignore = true, target= "suppliersItem")
     ItemDto toItemDto(Item item);
 
     @Mapping(ignore = true, target = "stateItems")

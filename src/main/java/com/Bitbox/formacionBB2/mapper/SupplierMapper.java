@@ -18,7 +18,6 @@ public interface SupplierMapper {
     SupplierDto toSupplierDto(Supplier supplier);
 
     @Mapping(ignore = true, target = "itemsSupplier")
-//    List<SupplierDto> toSupplierDtoList(List<Supplier> supplier);
     Set<SupplierDto> toSupplierDtoList(Set<Supplier> supplier);
 
 }

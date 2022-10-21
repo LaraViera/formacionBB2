@@ -10,7 +10,6 @@ public class ItemDto {
     Long idCreatorItem;
     Boolean stateItems;
     Long itemCode;
-    //    List<StateItem> stateItems;
     LocalDate creationDateItem;
     String description;
     Long idItem;
