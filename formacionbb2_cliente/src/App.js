@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useDispatch, useSelector } from "react-redux";
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import React, {useCallback, useEffect, useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import {BrowserRouter as Router, Link, Route, Routes} from 'react-router-dom';
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import './App.css';
@@ -9,17 +9,19 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Home from "./components/Home";
 import Profile from "./components/Profile";
-import BoardUser from "./components/BoardUser";
 import BoardAdmin from "./components/BoardAdmin";
+import Item from './components/Item';
+import AddItem from './components/AddItem';
+import ItemsList from './components/ItemList';
 
-import { logout } from './slices/auth';
+import {logout} from './slices/auth';
 
 import eventBus from '../src/common/EventBus'
 
 const App = () => {
   const [showAdminBoard, setShowAdminBoard] = useState(false);
 
-  const { user: currentUser } = useSelector((state) => state.auth);
+  const {user: currentUser} = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   const logOut = useCallback(() => {
@@ -66,27 +68,38 @@ const App = () => {
           )}
 
           {currentUser && (
-            <li className="nav-item">
-              <Link to={"/user"} className="nav-link">
-                User
-              </Link>
-            </li>
+              <li className="nav-item">
+                <Link to={"/itemList"} className="nav-link">
+                  Item List
+                </Link>
+              </li>
           )}
         </div>
 
         {currentUser ? (
-          <div className="navbar-nav ml-auto">
-            <li className="nav-item">
-              <Link to={"/profile"} className="nav-link">
-                {currentUser.username}
-              </Link>
-            </li>
-            <li className="nav-item">
+            <div className="navbar-nav ml-auto">
+              <li className="nav-item">
+                <Link to={"/items"} className="nav-link">
+                  Items
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to={"/add"} className="nav-link">
+                  Add
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to={"/profile"} className="nav-link">
+                  {currentUser.username}
+                </Link>
+              </li>
+              <li className="nav-item">
                 <a href="/login" className="nav-link" onClick={logOut}>
-                    LogOut
+                  LogOut
                 </a>
-            </li>
-          </div>
+              </li>
+
+            </div>
         ) : (
           <div className="navbar-nav ml-auto">
             <li className="nav-item">
@@ -106,13 +119,15 @@ const App = () => {
 
       <div className="container mt-3">
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/user" element={<BoardUser />} />
-          <Route path="/admin" element={<BoardAdmin />} />
+          <Route path="/" element={<Home/>}/>
+          <Route path="/home" element={<Home/>}/>
+          <Route path="/login" element={<Login/>}/>
+          <Route path="/register" element={<Register/>}/>
+          <Route path="/profile" element={<Profile/>}/>
+          <Route path="/itemList" element={<ItemsList/>}/>
+          <Route path="/admin" element={<BoardAdmin/>}/>
+          <Route path="/add" component={<AddItem/>}/>
+          <Route path="/items/:id" component={<Item/>}/>
         </Routes>
       </div>
     </div>
