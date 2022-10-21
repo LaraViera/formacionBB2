@@ -14,6 +14,9 @@ import Item from './components/Item';
 import AddItem from './components/AddItem';
 import ItemsList from './components/ItemList';
 
+import "@fortawesome/fontawesome-free/css/all.css";
+import "@fortawesome/fontawesome-free/js/all.js";
+
 import {logout} from './slices/auth';
 
 import eventBus from '../src/common/EventBus'
@@ -78,14 +81,10 @@ const App = () => {
 
         {currentUser ? (
             <div className="navbar-nav ml-auto">
+              
               <li className="nav-item">
-                <Link to={"/items"} className="nav-link">
-                  Items
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to={"/add"} className="nav-link">
-                  Add
+                <Link to={"/saveItem"} className="nav-link">
+                  New Item
                 </Link>
               </li>
               <li className="nav-item">
@@ -126,8 +125,8 @@ const App = () => {
           <Route path="/profile" element={<Profile/>}/>
           <Route path="/itemList" element={<ItemsList/>}/>
           <Route path="/admin" element={<BoardAdmin/>}/>
-          <Route path="/add" component={<AddItem/>}/>
-          <Route path="/items/:id" component={<Item/>}/>
+          <Route path="/saveItem" element={<AddItem/>}/>
+          <Route path="/items/:id" element={<Item/>}/>
         </Routes>
       </div>
     </div>

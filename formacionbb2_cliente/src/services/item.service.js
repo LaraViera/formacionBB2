@@ -34,24 +34,25 @@ import itemHeader from "./item-header";
 import userEvent from "@testing-library/user-event";
 
 
- const API_URL = "http://localhost:8080/item";
+const API_URL = "http://localhost:8080/item";
 
 const getAll = () => {
-  return axios.get(API_URL + "/allItems", {headers: itemHeader()  });
+  return axios.get(API_URL + "/allItems", { headers: itemHeader() });
 };
-
-
-/*const getAll = () => {
-  return http.get("/allItems");
-};*/
 
 const get = (id) => {
   return http.get(`/item/${id}`);
 };
 
 const create = (data) => {
-  return http.post("/item", data);
-};
+  // console.log(API_URL + "/saveItem",{ data:JSON.stringify(data),  headers: itemHeader() })
+   console.log(API_URL + "/saveItem",{ data:JSON.stringify(data),  headers: itemHeader() })
+  return axios.post(API_URL + "/saveItem",{ data:JSON.stringify(data),  headers: itemHeader() })
+}
+/*const create = (data) => {
+  return http.post("/saveItem", data);
+  // return http.post("/item", data);
+};*/
 
 const update = (id, data) => {
   return http.put(`/item/${id}`, data);

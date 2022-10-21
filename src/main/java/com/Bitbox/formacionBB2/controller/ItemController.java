@@ -36,7 +36,8 @@ public class ItemController {
     @Autowired
     private SupplierMapper supplierMapper;
 
-    @RequestMapping(value = "/saveItem", method = RequestMethod.POST, consumes = "application/json;charset=UTF-8")
+    //TODO NO LLEGAN LOS DATOS desde cliente
+    @RequestMapping(value = "/saveItem", method = RequestMethod.POST, consumes = "application/json")
     public Boolean saveItem(@RequestBody Item newItem) {
         try {
             List<StateItem> stateItems = new ArrayList<>();

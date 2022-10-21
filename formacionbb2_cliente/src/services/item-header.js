@@ -3,7 +3,8 @@ export default function itemHeader() {
 
     if (user && user.accessToken) {
         return {"Authorization": 'Bearer ' + user.accessToken
-        ,"Content-type": "application/json"};
+        // ,"Content-type": "application/json;charset=UTF-8"};
+         ,"Content-type": "application/json"};
     } else {
         return {};
     }

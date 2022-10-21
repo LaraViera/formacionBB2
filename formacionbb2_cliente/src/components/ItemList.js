@@ -1,9 +1,19 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import ItemDataService from "../services/item.service";
 import { useTable } from "react-table";
+import AddItem from "./AddItem";
 
 const ItemsList = (props) => {
     const [Items, setItems] = useState([]);
+
+    const initialItemState = {
+        itemCode: "",
+        description: "",
+        priceItem: "",
+        stateItems: ""
+    };
+
+    const [newItem, setNewItem] = useState(initialItemState);
     const [searchPrice, setSearchPrice] = useState("");
     const ItemsRef = useRef();
 
@@ -21,7 +31,7 @@ const ItemsList = (props) => {
     const retrieveItems = () => {
         ItemDataService.getAll()
             .then((response) => {
-                console.log('ItemList: ',response.data)
+                console.log('ItemList: ', response.data)
                 setItems(response.data);
             })
             .catch((e) => {
@@ -31,6 +41,31 @@ const ItemsList = (props) => {
 
     const refreshList = () => {
         retrieveItems();
+    };
+
+    const saveItem = () => {
+        let data = {
+            itemCode: newItem.itemCode,
+            priceItem: newItem.priceItem,
+            description: newItem.description,
+            stateItem: true
+        };
+
+        ItemDataService.create(data)
+            // console.log(data)
+            .then(response => {
+                setNewItem({
+                    itemCode: response.data.itemCode,
+                    priceItem: response.data.priceItem,
+                    description: response.data.description,
+                    stateItem: response.data.stateItem
+                });
+                // setSubmitted(true);
+                console.log(response.data);
+            })
+            .catch(e => {
+                console.log(e);
+            });
     };
 
     const removeAllItems = () => {
@@ -77,6 +112,11 @@ const ItemsList = (props) => {
             });
     };
 
+    const handleInputChange = event => {
+        const { name, value } = event.target;
+        setNewItem({ ...newItem, [name]: value });
+    };
+
     const columns = useMemo(
         () => [
             {
@@ -102,8 +142,8 @@ const ItemsList = (props) => {
             {
                 Header: "State",
                 accessor: "stateItems",
-                Cell:(props) =>{
-                    return props.value && props.value === true? "Active" : "Discontinued";
+                Cell: (props) => {
+                    return props.value && props.value === true ? "Active" : "Discontinued";
                 }
             },
             {
@@ -139,28 +179,175 @@ const ItemsList = (props) => {
         data: Items,
     });
 
+    // return (
+    //     <div className="list row">
+    //         <div className="col-md-8">
+    //             <div className="input-group mb-3">
+    //                 <input
+    //                     type="text"
+    //                     className="form-control"
+    //                     placeholder="Search by price"
+    //                     value={searchPrice}
+    //                     onChange={onChangeSearchPrice}
+    //                 />
+    //                 <div className="input-group-append">
+    //                     <button
+    //                         className="btn btn-outline-secondary"
+    //                         type="button"
+    //                         onClick={findByPrice}
+    //                     >
+    //                         Search
+    //                     </button>
+    //                 </div>
+    //             </div>
+    //         </div>
+    //         <div className="col-md-12 list">
+    //             <h4>Add New Item</h4>
+    //             <div className="input-group mb-3">
+    //                 <input
+    //                     type="text"
+    //                     className="form-control"
+    //                     placeholder="Item code"
+    //                     value={searchPrice}
+    //                     onChange={onChangeSearchPrice}
+    //                 />
+    //                 <input
+    //                     type="text"
+    //                     className="form-control"
+    //                     placeholder="Description"
+    //                     value={searchPrice}
+    //                     onChange={onChangeSearchPrice}
+    //                 />
+    //                 <input
+    //                     type="text"
+    //                     className="form-control"
+    //                     placeholder="Price"
+    //                     value={searchPrice}
+    //                     onChange={onChangeSearchPrice}
+    //                 />
+    //                 <input
+    //                     type="text"
+    //                     className="form-control"
+    //                     placeholder="State"
+    //                     value={searchPrice}
+    //                     onChange={onChangeSearchPrice}
+    //                 />
+    //                 <div className="input-group-append">
+    //                     <button
+    //                         className="btn btn-outline-secondary"
+    //                         type="button"
+    //                         onClick={AddItem}
+    //                     >
+    //                         New Item
+    //                     </button>
+    //                 </div>
+    //             </div>
+    //         </div>
+    //         <div>
+
+    //         </div>
+    //         <br/>
+    //         <div className="col-md-12 list">
+    //             <h4>Item List</h4>
+    //             <table
+    //                 className="table table-striped table-bordered"
+    //                 {...getTableProps()}
+    //             >
+    //                 <thead>
+    //                     {headerGroups.map((headerGroup) => (
+    //                         <tr {...headerGroup.getHeaderGroupProps()}>
+    //                             {headerGroup.headers.map((column) => (
+    //                                 <th {...column.getHeaderProps()}>
+    //                                     {column.render("Header")}
+    //                                 </th>
+    //                             ))}
+    //                         </tr>
+    //                     ))}
+    //                 </thead>
+    //                 <tbody {...getTableBodyProps()}>
+    //                     {rows.map((row, i) => {
+    //                         prepareRow(row);
+    //                         return (
+    //                             <tr {...row.getRowProps()}>
+    //                                 {row.cells.map((cell) => {
+    //                                     return (
+    //                                         <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+    //                                     );
+    //                                 })}
+    //                             </tr>
+    //                         );
+    //                     })}
+    //                 </tbody>
+    //             </table>
+    //         </div>
+
+    //         <div className="col-md-8">
+    //             <button className="btn btn-sm btn-danger" onClick={removeAllItems}>
+    //                 Remove All
+    //             </button>
+    //         </div>
+
+    //     </div>
+    // );
     return (
         <div className="list row">
-            <div className="col-md-8">
+
+            <div className="col-md-8 list">
                 <div className="input-group mb-3">
                     <input
                         type="text"
                         className="form-control"
-                        placeholder="Search by price"
-                        value={searchPrice}
-                        onChange={onChangeSearchPrice}
+                        id="itemCode"
+                        placeholder="Item Code"
+                        required
+                        value={newItem.itemCode}
+                        onChange={handleInputChange}
+                        name="itemCode"
+                    />
+                    <input
+                        type="text"
+                        className="form-control"
+                        id="description"
+                        required
+                        placeholder="Description"
+                        value={newItem.description}
+                        onChange={handleInputChange}
+                        name="description"
+                    />
+                    <input
+                        type="text"
+                        className="form-control"
+                        id="priceItem"
+                        placeholder="Price"
+                        value={newItem.priceItem}
+                        onChange={handleInputChange}
+                        name="priceItem"
+                    />
+                    <input
+                        type="text"
+                        className="form-control"
+                        id="stateItem"
+                        placeholder="State"
+                        value={newItem.stateItem}
+                        onChange={handleInputChange}
+                        name="stateItem"
                     />
                     <div className="input-group-append">
                         <button
                             className="btn btn-outline-secondary"
                             type="button"
-                            onClick={findByPrice}
+                            onClick={saveItem}
+                        // onClick={AddItem}
                         >
-                            Search
+                            New Item
                         </button>
                     </div>
                 </div>
             </div>
+            <div>
+
+            </div>
+            <br />
             <div className="col-md-12 list">
                 <table
                     className="table table-striped table-bordered"
@@ -199,6 +386,7 @@ const ItemsList = (props) => {
                     Remove All
                 </button>
             </div>
+
         </div>
     );
 };

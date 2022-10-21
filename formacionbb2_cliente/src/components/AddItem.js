@@ -3,11 +3,12 @@ import ItemDataService from "../services/item.service";
 
 const AddItem = () => {
     const initialItemState = {
-        id: null,
-        price: "",
+        itemCode: "",
         description: "",
-        state: false
+        priceItem: "",
+        stateItems: ""
     };
+
     const [Item, setItem] = useState(initialItemState);
     const [submitted, setSubmitted] = useState(false);
 
@@ -18,17 +19,19 @@ const AddItem = () => {
 
     const saveItem = () => {
         let data = {
-            price: Item.price,
-            description: Item.description
+            itemCode:this.Item.itemCode,
+            priceItem: this.Item.priceItem,
+            description: this.Item.description,
+            stateItems:this.Item.stateItems("true")
         };
 
         ItemDataService.create(data)
             .then(response => {
                 setItem({
-                    id: response.data.id,
-                    price: response.data.price,
+                    itemCode: response.data.itemCode,
+                    priceItem: response.data.priceItem,
                     description: response.data.description,
-                    state: response.data.state
+                    stateItems: response.data.stateItems
                 });
                 setSubmitted(true);
                 console.log(response.data);

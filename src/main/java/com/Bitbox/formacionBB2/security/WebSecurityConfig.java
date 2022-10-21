@@ -70,8 +70,8 @@ public class WebSecurityConfig {
         http.cors().and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests().antMatchers("/api/auth/**", "/").permitAll()
-                .antMatchers("/api/test/**", "/h2-console/**", "/").permitAll()
+                .authorizeRequests().antMatchers("/api/auth/**", "/**", "/item/**").permitAll()
+                .antMatchers("/api/test/**", "/h2-console/**", "/**", "/item/**").permitAll()
                 .anyRequest().authenticated();
 
         http.authenticationProvider(authenticationProvider());

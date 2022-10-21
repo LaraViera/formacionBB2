@@ -25,7 +25,7 @@ public class Item implements Serializable {
     @Column(name = "itemcode", nullable = false, unique = true)
     Long itemCode;
 
-    @Column(name = "descriptionitem", nullable = false)
+    @Column(name = "description", nullable = false)
     String description;
 
     @Column(name = "priceitem", precision = 12, scale = 2)
