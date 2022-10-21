@@ -1,24 +1,25 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, usestatusItem } from "react";
 import ItemDataService from "../services/item.service";
 
 const Item = props => {
-    const initialItemState = {
+    const initialItemstatusItem = {
         idItem: null,
-        itemCode:"",
+        itemCode: "",
         description: "",
         priceItem: "",
-        creationDate:"",
-        creator:"",
-        state: false
+        creationDate: "",
+        idCreatorItem: "",
+        stateItems: "",
+        statusItem: false
     };
-    const [currentItem, setCurrentItem] = useState(initialItemState);
-    const [message, setMessage] = useState("");
+    const [currentItem, setCurrentItem] = usestatusItem(initialItemstatusItem);
+    const [message, setMessage] = usestatusItem("");
 
     const getItem = idItem => {
         ItemDataService.get(idItem)
             .then(response => {
                 setCurrentItem(response.data);
-                console.log('Item: ',response.data);
+                console.log('Item: ', response.data);
             })
             .catch(e => {
                 console.log(e);
@@ -30,26 +31,29 @@ const Item = props => {
     }, [props.match.params.idItem]);
 
     const handleInputChange = event => {
-        const {name, value} = event.target;
-        setCurrentItem({...currentItem, [name]: value});
+        const { name, value } = event.target;
+        setCurrentItem({ ...currentItem, [name]: value });
     };
 
-    const updatestate = status => {
+    const updatestateItem = status => {
+
+
         let data = {
             idItem: currentItem.idItem,
-            itemCode:currentItem.itemCode,
+            itemCode: currentItem.itemCode,
             description: currentItem.description,
             priceItem: currentItem.priceItem,
-            creationDate:currentItem.creationDate,
-            creator:currentItem.creator,
-            state: status
+            creationDateItem: currentItem.creationDateItem,
+            idCreatorItem: currentItem.idCreatorItem,
+            stateItems: currentItem.stateItems+' ',
+            // statusItem: status
         };
 
         ItemDataService.update(currentItem.idItem, data)
             .then(response => {
-                setCurrentItem({...currentItem, state: status});
+                setCurrentItem({ ...currentItem, statesItem: currentItem.stateItems });
                 console.log(response.data);
-                setMessage("The status was updated successfully!");
+                setMessage("The state was updated successfully!");
             })
             .catch(e => {
                 console.log(e);
@@ -84,7 +88,7 @@ const Item = props => {
                 <div className="edit-form">
                     <h4>Item</h4>
                     <form>
-                    <div className="form-group">
+                        <div className="form-group">
                             <label htmlFor="itemCode">Item Code</label>
                             <input
                                 type="text"
@@ -118,49 +122,53 @@ const Item = props => {
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="creationDate">Creation Date</label>
+                            <label htmlFor="creationDateItem">Creation Date</label>
                             <input
                                 type="text"
                                 className="form-control"
-                                idItem="creationDate"
-                                name="creationDate"
-                                value={currentItem.creationDate}
+                                idItem="creationDateItem"
+                                name="creationDateItem"
+                                value={currentItem.creationDateItem}
                                 onChange={handleInputChange}
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="creator">idItem creator</label>
+                            <label htmlFor="idCreatorItem">item idCreatorItem</label>
                             <input
                                 type="text"
                                 className="form-control"
-                                idItem="creator"
-                                name="creator"
-                                value={currentItem.creator}
+                                idItem="idCreatorItem"
+                                name="idCreatorItem"
+                                value={currentItem.idCreatorItem}
                                 onChange={handleInputChange}
                             />
                         </div>
-
-                        <div className="form-group">
-                            <label>
-                                <strong>Status:</strong>
-                            </label>
-                            {currentItem.state ? "state" : "Pending"}
-                        </div>
+                            <div className="form-group">
+                                <label htmlFor="stateItems">stateItems</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    idItem="stateItems"
+                                    name="stateItems"
+                                    value={currentItem.stateItems+' '}
+                                    onChange={handleInputChange}
+                                />
+                            </div>
                     </form>
 
-                    {currentItem.state ? (
+                    {currentItem.statusItem ? (
                         <button
                             className="badge badge-primary mr-2"
-                            onClick={() => updatestate(false)}
+                            onClick={() => updatestateItem(false)}
                         >
-                            UnPublish
+                            Discontinued
                         </button>
                     ) : (
                         <button
                             className="badge badge-primary mr-2"
-                            onClick={() => updatestate(true)}
+                            onClick={() => updatestateItem(true)}
                         >
-                            Publish
+                            Active
                         </button>
                     )}
 
@@ -179,7 +187,7 @@ const Item = props => {
                 </div>
             ) : (
                 <div>
-                    <br/>
+                    <br />
                     <p>Please click on a Item...</p>
                 </div>
             )}

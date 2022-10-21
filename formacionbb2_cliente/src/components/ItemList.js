@@ -93,18 +93,18 @@ const ItemsList = (props) => {
             },
             {
                 Header: "Creation Date",
-                accessor: "creationDate",
+                accessor: "creationDateItem",
             },
             {
-                Header: "Creator",
-                accessor: "creator",
+                Header: "ID Creator",
+                accessor: "idCreatorItem",
             },
             {
-                Header: "Status",
-                accessor: "state",
-                Cell: (props) => {
-                    return props.value ? "Active" : "Discontinued";
-                },
+                Header: "State",
+                accessor: "stateItems",
+                Cell:(props) =>{
+                    return props.value && props.value === true? "Active" : "Discontinued";
+                }
             },
             {
                 Header: "Actions",
