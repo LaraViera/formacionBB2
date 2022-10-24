@@ -18,8 +18,9 @@ import "@fortawesome/fontawesome-free/css/all.css";
 import "@fortawesome/fontawesome-free/js/all.js";
 
 import {logout} from './slices/auth';
+import AuthVerify from './common/AuthVerify';
 
-import eventBus from '../src/common/EventBus'
+// import eventBus from '../src/common/EventBus'
 
 const App = () => {
   const [showAdminBoard, setShowAdminBoard] = useState(false);
@@ -38,14 +39,7 @@ const App = () => {
     } else {
       setShowAdminBoard(false);
     }
-    eventBus.on("logout", () => {
-      logOut();
-    })
-
-    return () => {
-      eventBus.remove("logout");
-    };
-  }, [currentUser, logOut]);
+   }, [currentUser]);
 
 
   return (
@@ -129,6 +123,7 @@ const App = () => {
           <Route path="/items/:id" element={<Item/>}/>
         </Routes>
       </div>
+      <AuthVerify logOUt={logOut} />
     </div>
   </Router>
   );

@@ -1,15 +1,12 @@
 package com.Bitbox.formacionBB2.service.impl;
 
 import com.Bitbox.formacionBB2.model.Item;
-import com.Bitbox.formacionBB2.model.PriceReduction;
 import com.Bitbox.formacionBB2.repository.ItemRepository;
 import com.Bitbox.formacionBB2.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ItemServiceImpl implements ItemService {
@@ -23,23 +20,34 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Boolean saveItem(Item item) {
+    public Item saveItem(Item newItem) {
         try {
-            itemRepository.save(item);
-            return true;
+            Item item = itemRepository.save(newItem);
+            return item;
         } catch (Exception e) {
             throw e;
         }
     }
+// @Override
+//    public Boolean saveItem(Item item) {
+//        try {
+//            itemRepository.save(item);
+//            return true;
+//        } catch (Exception e) {
+//            throw e;
+//        }
+//    }
 
     @Override
     public List<Item> getAllItems() {
         return itemRepository.findAll();
     }
+/*
 
     public Optional<Item> getDetailsItemById(Long id) {
         return itemRepository.findById(id.toString());
     }
+*/
 
     public Item findItemByItemcode(Long itemCode) {
         return itemRepository.findByItemcode(itemCode);
@@ -49,7 +57,7 @@ public class ItemServiceImpl implements ItemService {
     public Item findPriceReductionActivated(Long itemCode) {
         return itemRepository.findPriceReductionActivated(itemCode);
     }
-
+/*
     @Override
     public List<PriceReduction> addPriceReductionToItem(Item newItem) {
         List<PriceReduction> priceReductionNewItem = newItem.getPriceReductionItem();
@@ -88,7 +96,7 @@ public class ItemServiceImpl implements ItemService {
                 priceReductionOld = priceReductionElement;
             }
         }
-    }
+    }*/
 
 
 }

@@ -33,6 +33,8 @@ import axios from "axios";
 import itemHeader from "./item-header";
 import userEvent from "@testing-library/user-event";
 
+const user = JSON.parse(localStorage.getItem("user"));
+
 
 const API_URL = "http://localhost:8080/item";
 
@@ -45,14 +47,13 @@ const get = (id) => {
 };
 
 const create = (data) => {
-  // console.log(API_URL + "/saveItem",{ data:JSON.stringify(data),  headers: itemHeader() })
-   console.log(API_URL + "/saveItem",{ data:JSON.stringify(data),  headers: itemHeader() })
-  return axios.post(API_URL + "/saveItem",{ data:JSON.stringify(data),  headers: itemHeader() })
+  let options = {
+    headers: { 'authorization': 'Bearer ' + user.accessToken, 'Content-Type': 'application/json' }
+  }
+  // console.log(API_URL + "/createItem", JSON.parse(data), itemHeader())
+  return axios.post(API_URL + '/createItem', JSON.stringify(data), {headers: itemHeader()})
+  // return axios.post(API_URL + '/createItem', JSON.stringify(data), options)
 }
-/*const create = (data) => {
-  return http.post("/saveItem", data);
-  // return http.post("/item", data);
-};*/
 
 const update = (id, data) => {
   return http.put(`/item/${id}`, data);

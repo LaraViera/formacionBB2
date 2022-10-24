@@ -1,7 +1,10 @@
+
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import ItemDataService from "../services/item.service";
 import { useTable } from "react-table";
 import AddItem from "./AddItem";
+import { useDispatch, useSelector } from "react-redux";
+import { createItem } from "../slices/item";
 
 const ItemsList = (props) => {
     const [Items, setItems] = useState([]);
@@ -10,11 +13,19 @@ const ItemsList = (props) => {
         itemCode: "",
         description: "",
         priceItem: "",
-        stateItems: ""
+        stateItem: ""
     };
 
+
+
     const [newItem, setNewItem] = useState(initialItemState);
-    const [searchPrice, setSearchPrice] = useState("");
+    const [submitted, setSubmitted] = useState(false);
+
+    const dispatch = useDispatch();
+
+    const { message } = useSelector((state) => state.message);
+
+
     const ItemsRef = useRef();
 
     ItemsRef.current = Items;
@@ -23,10 +34,6 @@ const ItemsList = (props) => {
         retrieveItems();
     }, []);
 
-    const onChangeSearchPrice = (e) => {
-        const searchPrice = e.target.value;
-        setSearchPrice(searchPrice);
-    };
 
     const retrieveItems = () => {
         ItemDataService.getAll()
@@ -44,28 +51,23 @@ const ItemsList = (props) => {
     };
 
     const saveItem = () => {
-        let data = {
-            itemCode: newItem.itemCode,
-            priceItem: newItem.priceItem,
-            description: newItem.description,
-            stateItem: true
-        };
+         const { itemCode, description, priceItem } = newItem;
 
-        ItemDataService.create(data)
-            // console.log(data)
-            .then(response => {
-                setNewItem({
-                    itemCode: response.data.itemCode,
-                    priceItem: response.data.priceItem,
-                    description: response.data.description,
-                    stateItem: response.data.stateItem
-                });
-                // setSubmitted(true);
-                console.log(response.data);
-            })
-            .catch(e => {
-                console.log(e);
-            });
+         console.log('MIAUUU',{itemCode, description, priceItem })
+         dispatch(createItem(newItem))
+         .unwrap()
+         .then(data => {
+                 setItems({
+                     itemCode: data.itemCode,
+                     description: data.description,
+                     priceItem: data.priceItem,
+                    //  stateItem: data.stateItem
+                 });
+                 setSubmitted(true);
+             })
+             .catch(e => {
+                 console.log(e);
+             })
     };
 
     const removeAllItems = () => {
@@ -79,15 +81,6 @@ const ItemsList = (props) => {
             });
     };
 
-    const findByPrice = () => {
-        ItemDataService.findByPrice(searchPrice)
-            .then((response) => {
-                setItems(response.data);
-            })
-            .catch((e) => {
-                console.log(e);
-            });
-    };
 
     const openItem = (rowIndex) => {
         const id = ItemsRef.current[rowIndex].id;
@@ -179,170 +172,73 @@ const ItemsList = (props) => {
         data: Items,
     });
 
-    // return (
-    //     <div className="list row">
-    //         <div className="col-md-8">
-    //             <div className="input-group mb-3">
-    //                 <input
-    //                     type="text"
-    //                     className="form-control"
-    //                     placeholder="Search by price"
-    //                     value={searchPrice}
-    //                     onChange={onChangeSearchPrice}
-    //                 />
-    //                 <div className="input-group-append">
-    //                     <button
-    //                         className="btn btn-outline-secondary"
-    //                         type="button"
-    //                         onClick={findByPrice}
-    //                     >
-    //                         Search
-    //                     </button>
-    //                 </div>
-    //             </div>
-    //         </div>
-    //         <div className="col-md-12 list">
-    //             <h4>Add New Item</h4>
-    //             <div className="input-group mb-3">
-    //                 <input
-    //                     type="text"
-    //                     className="form-control"
-    //                     placeholder="Item code"
-    //                     value={searchPrice}
-    //                     onChange={onChangeSearchPrice}
-    //                 />
-    //                 <input
-    //                     type="text"
-    //                     className="form-control"
-    //                     placeholder="Description"
-    //                     value={searchPrice}
-    //                     onChange={onChangeSearchPrice}
-    //                 />
-    //                 <input
-    //                     type="text"
-    //                     className="form-control"
-    //                     placeholder="Price"
-    //                     value={searchPrice}
-    //                     onChange={onChangeSearchPrice}
-    //                 />
-    //                 <input
-    //                     type="text"
-    //                     className="form-control"
-    //                     placeholder="State"
-    //                     value={searchPrice}
-    //                     onChange={onChangeSearchPrice}
-    //                 />
-    //                 <div className="input-group-append">
-    //                     <button
-    //                         className="btn btn-outline-secondary"
-    //                         type="button"
-    //                         onClick={AddItem}
-    //                     >
-    //                         New Item
-    //                     </button>
-    //                 </div>
-    //             </div>
-    //         </div>
-    //         <div>
-
-    //         </div>
-    //         <br/>
-    //         <div className="col-md-12 list">
-    //             <h4>Item List</h4>
-    //             <table
-    //                 className="table table-striped table-bordered"
-    //                 {...getTableProps()}
-    //             >
-    //                 <thead>
-    //                     {headerGroups.map((headerGroup) => (
-    //                         <tr {...headerGroup.getHeaderGroupProps()}>
-    //                             {headerGroup.headers.map((column) => (
-    //                                 <th {...column.getHeaderProps()}>
-    //                                     {column.render("Header")}
-    //                                 </th>
-    //                             ))}
-    //                         </tr>
-    //                     ))}
-    //                 </thead>
-    //                 <tbody {...getTableBodyProps()}>
-    //                     {rows.map((row, i) => {
-    //                         prepareRow(row);
-    //                         return (
-    //                             <tr {...row.getRowProps()}>
-    //                                 {row.cells.map((cell) => {
-    //                                     return (
-    //                                         <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
-    //                                     );
-    //                                 })}
-    //                             </tr>
-    //                         );
-    //                     })}
-    //                 </tbody>
-    //             </table>
-    //         </div>
-
-    //         <div className="col-md-8">
-    //             <button className="btn btn-sm btn-danger" onClick={removeAllItems}>
-    //                 Remove All
-    //             </button>
-    //         </div>
-
-    //     </div>
-    // );
     return (
         <div className="list row">
+            <div className="submit-form ">
 
-            <div className="col-md-8 list">
-                <div className="input-group mb-3">
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="itemCode"
-                        placeholder="Item Code"
-                        required
-                        value={newItem.itemCode}
-                        onChange={handleInputChange}
-                        name="itemCode"
-                    />
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="description"
-                        required
-                        placeholder="Description"
-                        value={newItem.description}
-                        onChange={handleInputChange}
-                        name="description"
-                    />
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="priceItem"
-                        placeholder="Price"
-                        value={newItem.priceItem}
-                        onChange={handleInputChange}
-                        name="priceItem"
-                    />
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="stateItem"
-                        placeholder="State"
-                        value={newItem.stateItem}
-                        onChange={handleInputChange}
-                        name="stateItem"
-                    />
-                    <div className="input-group-append">
-                        <button
-                            className="btn btn-outline-secondary"
-                            type="button"
-                            onClick={saveItem}
-                        // onClick={AddItem}
-                        >
-                            New Item
-                        </button>
+                <div className="col-md-8 list">
+                    <div className="input-group mb-3">
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="itemCode"
+                            placeholder="Item Code"
+                            required
+                            value={newItem.itemCode}
+                            onChange={handleInputChange}
+                            name="itemCode"
+                        />
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="description"
+                            required
+                            placeholder="Description"
+                            value={newItem.description}
+                            onChange={handleInputChange}
+                            name="description"
+                        />
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="priceItem"
+                            placeholder="Price"
+                            value={newItem.priceItem}
+                            onChange={handleInputChange}
+                            name="priceItem"
+                        />
+                        {/* <input
+                            type="text"
+                            className="form-control"
+                            id="stateItem"
+                            placeholder="State"
+                            value={newItem.stateItem}
+                            onChange={handleInputChange}
+                            name="stateItem"
+                        /> */}
+                        <div className="input-group-append">
+                            <button
+                                className="btn btn-outline-secondary"
+                                type="button"
+                                onClick={saveItem}
+                            // onClick={AddItem}
+                            >
+                                New Item
+                            </button>
+                        </div>
                     </div>
                 </div>
+                {submitted && (
+                    <div className="form-group">
+                        <div
+                            className={submitted ? "alert alert-success" : "alert alert-danger"}
+                            role="alert"
+                        >
+                            {message}
+                            {setSubmitted(false)}
+                        </div>
+                    </div>
+                )}
             </div>
             <div>
 

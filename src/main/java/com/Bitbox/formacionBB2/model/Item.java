@@ -60,6 +60,12 @@ public class Item implements Serializable {
         this.stateItem = stateItem;
     }
 
+    public Item(Long itemCode, String description, BigDecimal priceItem) {
+        this.itemCode = itemCode;
+        this.description = description;
+        this.priceItem = priceItem;
+    }
+
     public Item(Long idItem, String description, Long itemCode, BigDecimal priceItem, List<PriceReduction> priceReductionItem, List<StateItem> stateItem, Long idCreatorItem, Set<Supplier> suppliersItem) {
         this.idItem = idItem;
         this.itemCode = itemCode;

@@ -2,10 +2,10 @@ export default function itemHeader() {
     const user = JSON.parse(localStorage.getItem("user"));
 
     if (user && user.accessToken) {
-        return {"Authorization": 'Bearer ' + user.accessToken
-        // ,"Content-type": "application/json;charset=UTF-8"};
-         ,"Content-type": "application/json"};
+        return {
+             'authorization': 'Bearer ' + user.accessToken, 'Content-Type': 'application/json' };
     } else {
+        console.log('QUIIIIIIII')
         return {};
     }
 }
