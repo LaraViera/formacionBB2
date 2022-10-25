@@ -27,24 +27,32 @@ public class PriceReduction {
     @Column(name = "enddatepricereduction")
     LocalDate endDatePriceReduction;
 
+    @Column(name = "statepricereduction")
+    Boolean statePriceReduction = Boolean.FALSE;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference(value = "priceReductionItem")
     @JoinColumn(name = "itempricereduction_id", referencedColumnName = "iditem", nullable = false)
     Item itemPriceReduction;
 
 
-    public PriceReduction(Item itemPriceReduction, BigDecimal reducedPrice) {
+    public PriceReduction(Item itemPriceReduction, BigDecimal reducedPrice, Boolean statePriceReduction, LocalDate startDate, LocalDate endDate) {
         this.itemPriceReduction = itemPriceReduction;
         this.reducedPrice = reducedPrice;
-        this.startDatePriceReduction = LocalDate.now();
-        this.endDatePriceReduction = LocalDate.now();
+        this.statePriceReduction = statePriceReduction;
+//        this.startDatePriceReduction = LocalDate.now();
+//        this.endDatePriceReduction = LocalDate.now();
+        this.startDatePriceReduction = startDate;
+        this.endDatePriceReduction = endDate;
     }
 
     public PriceReduction() {
-        this.startDatePriceReduction = LocalDate.now();
-        this.endDatePriceReduction = LocalDate.now();
+//        this.startDatePriceReduction = LocalDate.now();
+//        this.endDatePriceReduction = LocalDate.now();
     }
 
+
+    // ID de la reducción del precio  //
     public Long getIdPriceReduction() {
         return idPriceReduction;
     }
@@ -53,6 +61,7 @@ public class PriceReduction {
         this.idPriceReduction = idPriceReduction;
     }
 
+    // Precio a reducir //
     public BigDecimal getReducedPrice() {
         return reducedPrice;
     }
@@ -61,6 +70,7 @@ public class PriceReduction {
         this.reducedPrice = reducedPrice;
     }
 
+    // Fecha INICIO //
     public LocalDate getStartDatePriceReduction() {
         return startDatePriceReduction;
     }
@@ -69,6 +79,7 @@ public class PriceReduction {
         this.startDatePriceReduction = startDatePriceReduction;
     }
 
+    // Fecha FIN //
     public LocalDate getEndDatePriceReduction() {
         return endDatePriceReduction;
     }
@@ -77,13 +88,23 @@ public class PriceReduction {
         this.endDatePriceReduction = endDatePriceReduction;
     }
 
-
+    // Item //
     public Item getItemPriceReduction() {
         return itemPriceReduction;
     }
 
     public void setItemPriceReduction(Item itemPriceReduction) {
+
         this.itemPriceReduction = itemPriceReduction;
+    }
+
+    // Estado Activado o no //
+    public Boolean getStatePriceReduction() {
+        return statePriceReduction;
+    }
+
+    public void setStatePriceReduction(Boolean statePriceReduction) {
+        this.statePriceReduction = statePriceReduction;
     }
 
     @Override
@@ -93,7 +114,8 @@ public class PriceReduction {
                 ", reducedPrice=" + reducedPrice +
                 ", startDatePriceReduction=" + startDatePriceReduction +
                 ", endDatePriceReduction=" + endDatePriceReduction +
-//                ", itemPriceReduction=" + itemPriceReduction +
+                ", statePriceReduction=" + statePriceReduction +
+                // ", itemPriceReduction=" + itemPriceReduction +
                 '}';
     }
 }

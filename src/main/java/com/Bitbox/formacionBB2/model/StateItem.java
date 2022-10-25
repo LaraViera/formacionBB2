@@ -22,8 +22,8 @@ public class StateItem {
     @Column(name = "updatestateItem")
     LocalDate updateStateItem;
 
+    @JsonBackReference(value = "stateItem")
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonBackReference(value = "stateItems")
     @JoinColumn(name = "item_id", referencedColumnName = "iditem", nullable = false)
     Item stateIdItem;
 

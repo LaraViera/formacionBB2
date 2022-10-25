@@ -1,21 +1,23 @@
 package com.Bitbox.formacionBB2.dto;
 
-import com.Bitbox.formacionBB2.model.PriceReduction;
-import com.Bitbox.formacionBB2.model.StateItem;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 
 public class ItemDto {
     Long idCreatorItem;
-    List<StateItem> stateItems;
+    Boolean stateItems;
+    Long itemCode;
+    //    List<StateItem> stateItems;
     LocalDate creationDateItem;
     String description;
     Long idItem;
     BigDecimal priceItem;
-    List<PriceReduction> priceReductions;
+    List<PriceReductionDto> priceReductions;
+    Set<SupplierDto> suppliersItem;
+
 
 
     public Long getIdCreatorItem() {
@@ -34,11 +36,19 @@ public class ItemDto {
         this.description = description;
     }
 
-    public List<StateItem> getStateItems() {
+    public Long getItemCode() {
+        return itemCode;
+    }
+
+    public void setItemCode(Long itemCode) {
+        this.itemCode = itemCode;
+    }
+
+    public Boolean getStateItems() {
         return stateItems;
     }
 
-    public void setStateItems(List<StateItem> stateItems) {
+    public void setStateItems(Boolean stateItems) {
         this.stateItems = stateItems;
     }
 
@@ -58,19 +68,31 @@ public class ItemDto {
         this.idItem = idItem;
     }
 
-    public BigDecimal getPrice() {
+    public BigDecimal getPriceItem() {
         return priceItem;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPriceItem(BigDecimal price) {
         this.priceItem = price;
     }
 
-    public List<PriceReduction> getPriceReductions() {
+
+    // Price Reduction
+    public List<PriceReductionDto> getPriceReductions() {
         return priceReductions;
     }
 
-    public void setPriceReductions(List<PriceReduction> priceReductions) {
+    public void setPriceReductions(List<PriceReductionDto> priceReductions) {
         this.priceReductions = priceReductions;
+    }
+
+    // Suppliers
+
+    public Set<SupplierDto> getSuppliersItem() {
+        return suppliersItem;
+    }
+
+    public void setSuppliersItem(Set<SupplierDto> suppliersItem) {
+        this.suppliersItem = suppliersItem;
     }
 }
